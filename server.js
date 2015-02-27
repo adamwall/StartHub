@@ -32,5 +32,7 @@ app.listen(config.port);
 // Expose app
 exports = module.exports = app;
 
+//comment from ian
+
 // Logging initialization
 console.log('MEAN.JS application started on port ' + config.port);
