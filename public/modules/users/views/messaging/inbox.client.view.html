@@ -8,8 +8,16 @@
     </div>
     <div class="list-group">
         <div ng-repeat="message in messages">
-        <a class="list-group-item" href="#!/messages/view?id={{message._id}}">{{message.messageSubject}} from {{message.userFrom}} on {{message.dateSent}}</a>
+        <a class="list-group-item" href="#!/messages/view?mid={{message._id}}">{{message.messageSubject}} from {{message.userFrom}} on {{message.dateSent}}</a>
         </div>
     </div>
+
+
+        <accordion>
+            <accordion-group heading="{{message.messageSubject}} from {{message.userFrom}}" ng-repeat="message in messages">
+                <h6><small>date: {{message.dateSent}}<br></small></h6>
+                <div class="container-fluid">{{message.messageBody}}</div>
+            </accordion-group>
+        </accordion>
 
 </section>

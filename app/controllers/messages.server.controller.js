@@ -66,7 +66,7 @@ exports.delete = function(req, res) {
  */
 exports.getMessageList = function(req, res) {
     if(req.user !== undefined) {
-        Messages.find({userTo: req.user.username}, function (err, results) {
+        Messages.find({ $query: {userTo: req.user.username}, $orderby: { dateSent : -1 } }, function (err, results) {
             console.log(results);
             res.json(results);
         });
