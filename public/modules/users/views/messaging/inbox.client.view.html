@@ -1,0 +1,23 @@
+<section data-ng-controller="MessagesController">
+    <h3>Message Inbox</h3>
+    <div data-ng-show="errorMessage" class="text-center text-danger">
+        <div class="alert alert-danger" role="alert">
+            <strong data-ng-bind="errorMessage"></strong>
+        </div>
+
+    </div>
+    <div class="list-group">
+        <div ng-repeat="message in messages">
+        <a class="list-group-item" href="#!/messages/view?mid={{message._id}}">{{message.messageSubject}} from {{message.userFrom}} on {{message.dateSent}}</a>
+        </div>
+    </div>
+
+
+        <accordion>
+            <accordion-group heading="{{message.messageSubject}} from {{message.userFrom}}" ng-repeat="message in messages">
+                <h6><small>date: {{message.dateSent}}<br></small></h6>
+                <div class="container-fluid">{{message.messageBody}}</div>
+            </accordion-group>
+        </accordion>
+
+</section>
