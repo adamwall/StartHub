@@ -5,4 +5,5 @@ module.exports = function(app) {
 
     //Setting up the messaging system
     app.route('/messages/').post(messages.sendMessage);
+    app.route('/messages/').get(messages.getMessageList);
 };

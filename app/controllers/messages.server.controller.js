@@ -65,5 +65,15 @@ exports.delete = function(req, res) {
  * Get a list of Messages
  */
 exports.getMessageList = function(req, res) {
-    
+    if(req.user !== undefined) {
+        Messages.find({userTo: req.user.username}, function (err, results) {
+            console.log(results);
+            res.json(results);
+        });
+    }
+    else {
+        return res.status(400).send({
+            message: 'You must be logged in to view inbox.'
+        });
+    }
 };

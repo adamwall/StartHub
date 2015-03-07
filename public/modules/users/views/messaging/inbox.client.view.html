@@ -1,0 +1,15 @@
+<section data-ng-controller="MessagesController">
+    <h3>Message Inbox</h3>
+    <div data-ng-show="errorMessage" class="text-center text-danger">
+        <div class="alert alert-danger" role="alert">
+            <strong data-ng-bind="errorMessage"></strong>
+        </div>
+
+    </div>
+    <div class="list-group">
+        <div ng-repeat="message in messages">
+        <a class="list-group-item" href="#!/messages/view?id={{message._id}}">{{message.messageSubject}} from {{message.userFrom}} on {{message.dateSent}}</a>
+        </div>
+    </div>
+
+</section>
