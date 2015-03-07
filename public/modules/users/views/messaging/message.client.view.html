@@ -1,0 +1,36 @@
+<section data-ng-controller="MessagesController">
+    <div class="container">
+        <h3>Send a message</h3><br>
+        <form role="form" name="messageForm" data-ng-submit="sendMessage()">
+            <fieldset>
+            <div class="form-group">
+                <span class="input-group"></span>
+                <label for="userTo">To: </label>
+                <input type="text" required id="userTo" name="userTo" class="form-control" data-ng-model="message.userTo" placeholder="username">
+            </div>
+            <div class="form-group">
+                <label for="messageSubject">Message Subject: </label>
+                <input type="text" required id="messageSubject" name="messageSubject" class="form-control" data-ng-model="message.messageSubject">
+            </div>
+            <div class="form-group">
+                <label for="messageBody">Message Body:</label>
+                <textarea class="form-control" rows="5" id="messageBody" data-ng-model="message.messageBody"></textarea>
+            </div>
+            <div class="text-center form-group">
+                <button type="submit" class="btn btn-lg btn-success btn-block">Send Message</button>
+            </div>
+                <div data-ng-show="successMessage" class="text-center text-success">
+                    <strong>Message Sent</strong>
+                </div>
+
+                    <div data-ng-show="errorMessage" class="text-center text-danger">
+                        <div class="alert alert-danger" role="alert">
+                        <strong data-ng-bind="errorMessage"></strong>
+                        </div>
+
+                </div>
+            </fieldset>
+
+        </form>
+    </div>
+</section>
