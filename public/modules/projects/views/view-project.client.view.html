@@ -10,12 +10,27 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
+
 	<small>
 		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="project.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="project.user.displayName"></span>
+			<div class="header">
+				<h1>Project Name:
+					<span data-ng-bind="project.title"></span>
+				</h1>
+				Posted on
+				<span data-ng-bind="project.created | date:'mediumDate'"></span>
+				by
+				<span data-ng-bind="project.user.displayName"></span>
+			</div>
+
+			<hr>
+
+			<div class="project-body">
+				<h3>Project Description: </h3>
+				<p><span data-ng-bind="project.description"></span></p>
+				<h3>Target Industry:</h3>
+				<p><span data-ng-bind="project.industry"></span></p>
+			</div>
 		</em>
 	</small>
 </section>
