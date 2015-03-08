@@ -1,12 +1,11 @@
 <section data-ng-controller="ProjectsController" data-ng-init="find()">
     <div class="page-header">
-        <h1>Projects</h1>
+        <h1>Project Listing</h1>
     </div>
     <div class="list-group">
         <a data-ng-repeat="project in projects" data-ng-href="#!/projects/{{project._id}}" class="list-group-item">
 			<small class="list-group-item-text">
-                <span data-ng-bind="project.title"></span>
-				 | <span data-ng-bind="project.description"></span>
+                <span data-ng-bind="project.title" id="project-title"></span>
                  | Posted on
 				<span data-ng-bind="project.created | date:'medium'"></span>
 				by
