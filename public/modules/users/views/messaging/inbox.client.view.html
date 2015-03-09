@@ -6,16 +6,9 @@
         </div>
 
     </div>
-    <div class="list-group">
-        <div ng-repeat="message in messages">
-        <a class="list-group-item" href="#!/messages/view?mid={{message._id}}">{{message.messageSubject}} from {{message.userFrom}} on {{message.dateSent}}</a>
-        </div>
-    </div>
-
-
         <accordion>
-            <accordion-group heading="{{message.messageSubject}} from {{message.userFrom}}" ng-repeat="message in messages">
-                <h6><small>date: {{message.dateSent}}<br></small></h6>
+            <accordion-group heading="{{message.messageSubject}} from {{message.userFrom}}" ng-repeat="message in messages" >
+                <small><span data-ng-bind="message.dateSent | date:'medium'"></span></small>
                 <div class="container-fluid">{{message.messageBody}}</div>
             </accordion-group>
         </accordion>
