@@ -3,11 +3,43 @@
 	font-size: 250px;
 }
 
-.cust-list {
-    font-size: 100px;
-}
-
 .checkbox-left {
 	width: 10%;
 	text-align: left;
 }
+
+.header {
+	color: #000;
+	font-style: normal;
+	text-align: center;
+}
+
+.list-group {
+	font-size: medium;
+}
+
+#project-title {
+	font-weight: 800;
+	color: blue;
+}
+
+hr {
+	border: 0;
+	height: 1px;
+	background: #333;
+	background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+	background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+	background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+	background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+
+.project-body {
+	color: #000;
+	font-style: normal;
+}
+
+.project-body p {
+	font-size: medium;
+}
+
+
