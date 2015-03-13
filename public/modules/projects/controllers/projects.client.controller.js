@@ -4,8 +4,8 @@
 
 var projectsApp = angular.module('projects');
 
-projectsApp.controller('ProjectsController', ['$scope', '$stateParams', 'Authentication', 'Projects',
-	function($scope, $stateParams, Authentication, Projects) {
+projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects',
+	function($scope, $stateParams, $location, Authentication, Projects) {
         $scope.authentication = Authentication;
 
 
@@ -65,7 +65,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', 'Authent
         // Find a list of Projects
         $scope.find = function() {
             $scope.projects = Projects.query();
-        }
+        };
 
         // Find existing Project
         $scope.findOne = function() {
