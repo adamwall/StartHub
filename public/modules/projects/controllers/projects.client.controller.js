@@ -67,12 +67,12 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
             $scope.projects = Projects.query();
         };
 
-        // Find existing Project
-        $scope.findOne = function() {
-            $scope.project = Projects.get({
-                projectId: $stateParams.projectId
-            });
-        };
+		// Find existing Project
+		$scope.getSelectedProject = function() {
+			$scope.project = Projects.get({ 
+				projectId: $stateParams.projectId
+			});
+		};
 
 
     }
