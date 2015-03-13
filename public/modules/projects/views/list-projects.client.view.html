@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-8">
             <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="Search for...">
+                <input type="text" class="form-control" ng-model="searchText" placeholder="search...">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button">Go!</button>
                 </span>
@@ -22,7 +22,7 @@
     </br>
     </br>
     <div class="list-group">
-        <div class="col-xs-6 col-sm-4" data-ng-repeat="project in projectsCtrl.projects">
+        <div class="col-xs-6 col-sm-4" data-ng-repeat="project in projectsCtrl.projects | filter:searchText">
             <a  data-ng-href="#!/projects/{{project._id}}" class="list-group-item">
                 <h4 class="cust-list text-center">
                     <i class="glyphicon glyphicon-folder-open cust-list"></i>
