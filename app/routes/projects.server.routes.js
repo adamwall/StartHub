@@ -3,6 +3,7 @@
 module.exports = function(app) {
 	var users = require('../../app/controllers/users.server.controller');
 	var projects = require('../../app/controllers/projects.server.controller');
+    var comment = require('../../app/controllers/comment.server.controller');
 
 	// Projects Routes
 	app.route('/projects')
@@ -14,6 +15,8 @@ module.exports = function(app) {
 		.put(users.requiresLogin, projects.hasAuthorization, projects.update)
 		.delete(users.requiresLogin, projects.hasAuthorization, projects.delete);
 
+    app.route('/projects/:projectId/comment')
+        .put(comment.create);
 	// Finish by binding the Project middleware
 	app.param('projectId', projects.projectByID);
 };

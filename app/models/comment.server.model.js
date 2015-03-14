@@ -10,8 +10,25 @@ var mongoose = require('mongoose'),
  * Comment Schema
  */
 var CommentSchema = new Schema({
-	// Comment model fields   
-	// ...
+    projectid: {
+        type: String,
+        required: 'projectid required',
+        trim: true
+    },
+    message: {
+        type: String,
+        require: 'comments required',
+        trim: true
+    },
+    author: {
+        type: String,
+        required: 'must be logged in to post',
+        trim: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 mongoose.model('Comment', CommentSchema);
