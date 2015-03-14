@@ -33,4 +33,10 @@ hr {
 	font-size: medium;
 }
 
+.comment-author {
+    font-size: xx-small;
+}
 
+.comment-body{
+    font-size: medium;
+}
