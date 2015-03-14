@@ -49,5 +49,8 @@ exports.delete = function(req, res) {
  * List of Comments
  */
 exports.list = function(req, res) {
-
+    console.log(req.pid);
+    Comment.find({ $query: {projectid: '5501f3cb755287ca0607312f'}, $orderby: { date : -1 } }, function (err, results) {
+        res.json(results);
+    });
 };

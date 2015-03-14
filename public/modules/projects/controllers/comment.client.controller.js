@@ -2,11 +2,12 @@
 
 var projectsApp = angular.module('projects');
 
-projectsApp.controller('CommentController', ['$scope', '$http', '$location', 'Authentication',
-    function($scope, $http, $location, Authentication) {
+projectsApp.controller('CommentController', ['$scope', '$http', '$location', 'Authentication', '$stateParams',
+    function($scope, $http, $location, Authentication, $stateParams) {
         var user = $scope.authentication.user;
+        var pid = $stateParams.projectId;
 
-        $scope.sendMessage = function() {
+        $scope.sendComment = function() {
             if(user){
                 $scope.comment.author = user.username;
                 $scope.comment.projectid = $scope.project._id;
@@ -17,10 +18,22 @@ projectsApp.controller('CommentController', ['$scope', '$http', '$location', 'Au
                 }).error(function(response) {
                     $scope.errorMessage = response.message;
                 });
-            };
-                //$scope.comment.author = user.username;
+            }
+        };
 
-                //$http.post('/projects/:projectId/comment')
+        $scope.getComments = function()
+        {
+            var path = '/projects/' + pid + '/comment';
+            $http({
+                url: path,
+                method: 'GET',
+                params: pid
+            }).success(function(results) {
+                $scope.comments = results;
+                console.log(results);
+            }).error(function (response) {
+                $scope.errorMessage = response.message;
+            });//asdas
         };
 	}
 ]);

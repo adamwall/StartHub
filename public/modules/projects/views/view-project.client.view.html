@@ -33,15 +33,15 @@
 			</div>
 		</em>
 	</small>
-    <div data-ng-controller="CommentController">
+    <div data-ng-controller="CommentController" data-ng-init="getComments()">
         <br><br><h3>Comments:</h3>
         <div class="list-group">
-            <li class="list-group-item">
-                <p class="list-group-item-text comment-body">asdaaaassa</p>
-                <p class="list-group-item-text comment-author">by author</p>
+            <li class="list-group-item" ng-repeat="comment in comments">
+                <p class="list-group-item-text comment-body">{{comment.message}}</p>
+                <p class="list-group-item-text comment-author">by {{comment.author}}</p>
             </li>
         </div>
-        <form role="form" name="commentForm" data-ng-submit="sendMessage()">
+        <form role="form" name="commentForm" data-ng-submit="sendComment()">
             <div class="form-group">
                 <label for="message">Message Body:</label>
                 <textarea class="form-control" rows="5" id="message" data-ng-model= "comment.message"></textarea>
