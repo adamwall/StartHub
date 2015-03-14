@@ -38,7 +38,7 @@
         <div class="list-group">
             <li class="list-group-item" ng-repeat="comment in comments">
                 <p class="list-group-item-text comment-body">{{comment.message}}</p>
-                <p class="list-group-item-text comment-author">by {{comment.author}}</p>
+                <p class="list-group-item-text comment-author">by {{comment.author}} on <span data-ng-bind="comment.date | date:'medium'"></span></p>
             </li>
         </div>
         <form role="form" name="commentForm" data-ng-submit="sendComment()">
