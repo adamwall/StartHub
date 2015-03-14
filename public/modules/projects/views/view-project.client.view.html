@@ -37,9 +37,18 @@
         <br><br><h3>Comments:</h3>
         <div class="list-group">
             <li class="list-group-item">
-                <p class="list-group-item-text comment-body">asdassa</p>
+                <p class="list-group-item-text comment-body">asdaaaassa</p>
                 <p class="list-group-item-text comment-author">by author</p>
             </li>
         </div>
+        <form role="form" name="commentForm" data-ng-submit="sendMessage()">
+            <div class="form-group">
+                <label for="message">Message Body:</label>
+                <textarea class="form-control" rows="5" id="message" data-ng-model= "comment.message"></textarea>
+            </div>
+            <div class="text-right form-group">
+                <button type="submit" class="btn btn-success">Add Comment</button>
+            </div>
+        </form>
     </section>
 </section>
