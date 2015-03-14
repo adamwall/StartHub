@@ -3,14 +3,25 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    _ = require('lodash');
+var _ = require('lodash'),
+    errorHandler = require('./errors.server.controller'),
+    mongoose = require('mongoose'),
+    passport = require('passport'),
+    Comment = mongoose.model('Comment');
 
 /**
  * Create a Comment
  */
 exports.create = function(req, res) {
-
+    var comment = new Comment(req.body);
+    comment.save(function (err) {
+       if(err) {
+           return res.status(400).send;
+       }
+        else{
+           res.json(comment);
+       }
+    });
 };
 
 /**
