@@ -12,7 +12,8 @@ projectsApp.controller('CommentController', ['$scope', '$http', '$location', 'Au
                 $scope.comment.author = user.username;
                 $scope.comment.projectid = $scope.project._id;
                 var path = '/projects/' + $scope.project._id + '/comment';
-                $http.post(path, $scope.comment).success(function() {
+                $http.post(path, $scope.comment).success(function(res) {
+                    $scope.comments.unshift(res);
                     $scope.errorMessage=null;
                     $scope.comment.message = '';
                 }).error(function(response) {
@@ -26,14 +27,13 @@ projectsApp.controller('CommentController', ['$scope', '$http', '$location', 'Au
             var path = '/projects/' + pid + '/comment';
             $http({
                 url: path,
-                method: 'GET',
-                params: pid
+                method: 'GET'
             }).success(function(results) {
                 $scope.comments = results;
                 console.log(results);
             }).error(function (response) {
                 $scope.errorMessage = response.message;
-            });//asdas
+            });
         };
 	}
 ]);
