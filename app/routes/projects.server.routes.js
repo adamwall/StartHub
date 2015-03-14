@@ -16,7 +16,7 @@ module.exports = function(app) {
 		.delete(users.requiresLogin, projects.hasAuthorization, projects.delete);
 
     app.route('/projects/:projectId/comment')
-        .put(comment.create);
+        .post(comment.create);
 	// Finish by binding the Project middleware
 	app.param('projectId', projects.projectByID);
 };
