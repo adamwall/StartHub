@@ -21,6 +21,32 @@
 				<span data-ng-bind="project.created | date:'mediumDate'"></span>
 				by
 				<span data-ng-bind="project.user.displayName"></span>
+                <!-- BEGIN MODAL CODE -->
+                <div ng-controller="MessagesController">
+                    <script type="text/ng-template" id="myModalContent.html">
+                    <div class="modal-header"><h2>Contact Project Owner</h2></div>
+                    <div class="modal-body">
+                        <form role="form" name="messageForm" data-ng-submit="contactOwner()">
+                            <div class="form-group">
+                                <label for="messageSubject">Message Subject: </label>
+                                <input type="text" required id="messageSubject" name="messageSubject" class="form-control" data-ng-model="message.messageSubject">
+                            </div>
+                            <div class="form-group">
+                                <label for="messageBody">Message Body:</label>
+                                <textarea class="form-control" rows="5" id="messageBody" data-ng-model="message.messageBody"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" >Send</button>
+                        </form>
+                        <div data-ng-show="errorMessage" class="text-center text-danger">
+                            <div class="alert alert-danger" role="alert">
+                                <strong data-ng-bind="errorMessage"></strong>
+                            </div>
+                        </div>
+                    </div>
+                    </script>
+                    <button class="btn btn-default" ng-click="open()">Contact Owner</button>
+                </div>
+                <!-- END MODAL CODE -->
 			</div>
 
 			<hr>

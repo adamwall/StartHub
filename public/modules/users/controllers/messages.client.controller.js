@@ -1,19 +1,35 @@
 'use strict';
 
-angular.module('users').controller('MessagesController', ['$scope', '$http', '$location', 'Authentication',
-	function($scope, $http, $location, Authentication) {
+angular.module('users').controller('MessagesController', ['$scope', '$http', '$location', 'Authentication', '$modal',
+	function($scope, $http, $location, Authentication, $modal) {
         $scope.authentication = Authentication;
         var user = $scope.authentication.user.username;
 
-        $http({
-            url: '/messages',
-            method: 'GET',
-            params: user
-        }).success(function(results) {
-            $scope.messages = results;
-        }).error(function (response) {
-            $scope.errorMessage = response.message;
-        });
+        $scope.open = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'myModalContent.html',
+                controller: 'ModalInstanceCtrl',
+                resolve: {
+                    proj: function () {
+                        return $scope.project;
+                    }
+                }
+            });
+        };
+
+
+
+        $scope.getMessageList = function() {
+            $http({
+                url: '/messages',
+                method: 'GET',
+                params: user
+            }).success(function(results) {
+                $scope.messages = results;
+            }).error(function (response) {
+                $scope.errorMessage = response.message;
+            });
+        };
 
         $scope.sendMessage = function() {
             $scope.successMessage=null;
@@ -34,7 +50,30 @@ angular.module('users').controller('MessagesController', ['$scope', '$http', '$l
             }
         };
 
-
-
 	}
 ]);
+
+
+angular.module('users').controller('ModalInstanceCtrl', function ($scope, $modalInstance, proj, Authentication, $http) {
+
+    $scope.authentication = Authentication;
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.contactOwner = function() {
+        $scope.message.userFrom = $scope.authentication.user.username;
+        $scope.message.userTo = proj.user.username;
+        $http.post('/messages/', $scope.message).success(function() {
+            $scope.errorMessage=null;
+            $modalInstance.close();
+        }).error(function(response) {
+            $scope.errorMessage = response.message;
+            });
+    };
+});

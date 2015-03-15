@@ -41,7 +41,7 @@ projectsApp.controller('CommentController', ['$scope', '$http', '$location', 'Au
             $http.put(path, comment[0]).success(function(res) {
 
             }).error(function(response) {
-
+                $scope.errorMessage = response.message;
             });
         };
 	}

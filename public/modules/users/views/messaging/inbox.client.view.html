@@ -1,4 +1,4 @@
-<section data-ng-controller="MessagesController">
+<section data-ng-controller="MessagesController" ng-init="getMessageList()">
     <h3>Message Inbox</h3>
     <div data-ng-show="errorMessage" class="text-center text-danger">
         <div class="alert alert-danger" role="alert">
@@ -12,5 +12,4 @@
                 <div class="container-fluid">{{message.messageBody}}</div>
             </accordion-group>
         </accordion>
-
 </section>
