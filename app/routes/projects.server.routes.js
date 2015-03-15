@@ -17,7 +17,8 @@ module.exports = function(app) {
 
     app.route('/projects/:projectId/comment')
         .post(comment.create)
-        .get(comment.list);
+        .get(comment.list)
+        .put(comment.delete);
 	// Finish by binding the Project middleware
 	app.param('projectId', projects.projectByID);
 };

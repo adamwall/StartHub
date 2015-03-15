@@ -37,13 +37,18 @@
         <br><br><h3>Comments:</h3>
         <div class="list-group">
             <li class="list-group-item" ng-repeat="comment in comments">
+                <div class="pull-right" data-ng-show="((authentication.user) && (authentication.user.username == comment.author))">
+                    <a class="btn btn-primary" data-ng-click="remove($index)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </div>
                 <p class="list-group-item-text comment-body">{{comment.message}}</p>
                 <p class="list-group-item-text comment-author">by {{comment.author}} on <span data-ng-bind="comment.date | date:'medium'"></span></p>
             </li>
         </div>
         <form role="form" name="commentForm" data-ng-submit="sendComment()">
             <div class="form-group">
-                <label for="message">Message Body:</label>
+                <label for="message">Add Comments:</label>
                 <textarea class="form-control" rows="5" id="message" data-ng-model= "comment.message"></textarea>
                 <script>
                     console.log('a');

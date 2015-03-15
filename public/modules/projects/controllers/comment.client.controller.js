@@ -30,9 +30,18 @@ projectsApp.controller('CommentController', ['$scope', '$http', '$location', 'Au
                 method: 'GET'
             }).success(function(results) {
                 $scope.comments = results;
-                console.log(results);
             }).error(function (response) {
                 $scope.errorMessage = response.message;
+            });
+        };
+
+        $scope.remove = function(index) {
+            var comment = $scope.comments.splice(index, 1);
+            var path = '/projects/' + $scope.project._id + '/comment';
+            $http.put(path, comment[0]).success(function(res) {
+
+            }).error(function(response) {
+
             });
         };
 	}

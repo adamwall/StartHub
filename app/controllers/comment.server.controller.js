@@ -42,7 +42,17 @@ exports.update = function(req, res) {
  * Delete an Comment
  */
 exports.delete = function(req, res) {
-
+    var comment = req.body;
+    Comment.findByIdAndRemove(comment._id, {}, function(err, obj) {
+        if (!err) {
+            res.json(obj);
+        }
+        else {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+    });
 };
 
 /**
