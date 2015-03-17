@@ -6,13 +6,12 @@
 var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
-	Comment = mongoose.model('Comment'),
-    Project = mongoose.model('Project');
+	Comment = mongoose.model('Comment');
 
 /**
  * Globals
  */
-var user, comment, project;
+var user, comment;
 
 /**
  * Unit tests
@@ -27,18 +26,6 @@ describe('Comment Model Unit Tests:', function() {
 			username: 'username',
 			password: 'password'
 		});
-
-        //project._id = '111';
-        //project = new Project({
-        //    title: 'test project',
-        //    description: 'desc',
-        //    industry: 'test ind',
-        //    referred: '',
-        //    created: Date.now,
-        //    user: user
-        //});
-        //
-        //project.save();
 
 		user.save(function() { 
 			comment = new Comment({
@@ -59,6 +46,14 @@ describe('Comment Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+        it('should have error when saving without projectid', function(done) {
+            comment.projectid ='';
+            return comment.save(function(err) {
+                should.exist(err);
+                done();
+            });
+        });
 	});
 
 	afterEach(function(done) { 

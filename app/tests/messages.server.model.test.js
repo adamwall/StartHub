@@ -6,8 +6,7 @@
 var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
-	Messages = mongoose.model('Messages'),
-    request = require('supertest');
+	Messages = mongoose.model('Messages');
 /**
  * Globals
  */
@@ -65,30 +64,6 @@ describe('Messages Model Unit Tests:', function() {
             });
         });
 	});
-
-    describe('Message List Routes', function() {
-        it('get message list route', function(done) {
-            request('localhost:3001').get(/messages/).expect(400).end(function(err, res){
-                if(err){
-                    done(err);
-                }
-                else{
-                    done();
-                }
-            });
-        });
-
-        it('should be able to save a message', function(done) {
-            request('localhost:3001').post('/messages/', messages).end(function(err, res){
-                if(err){
-                    done(err);
-                }
-                else{
-                    done();
-                }
-            });
-        });
-    });
 
 	afterEach(function(done) { 
 		Messages.remove().exec();
