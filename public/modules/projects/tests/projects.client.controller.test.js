@@ -53,7 +53,7 @@
 		it('$scope.find() should create an array with at least one Project object fetched from XHR', inject(function(Projects) {
 			// Create sample Project using the Projects service
 			var sampleProject = new Projects({
-				name: 'New Project'
+				title: 'New Project'
 			});
 
 			// Create a sample Projects array that includes the new Project
@@ -70,10 +70,10 @@
 			expect(scope.projects).toEqualData(sampleProjects);
 		}));
 
-		it('$scope.findOne() should create an array with one Project object fetched from XHR using a projectId URL parameter', inject(function(Projects) {
+		it('$scope.getSelectedProject() should create an array with one Project object fetched from XHR using a projectId URL parameter', inject(function(Projects) {
 			// Define a sample Project object
 			var sampleProject = new Projects({
-				name: 'New Project'
+				title: 'New Project'
 			});
 
 			// Set the URL parameter
@@ -83,7 +83,7 @@
 			$httpBackend.expectGET(/projects\/([0-9a-fA-F]{24})$/).respond(sampleProject);
 
 			// Run controller functionality
-			scope.findOne();
+			scope.getSelectedProject();
 			$httpBackend.flush();
 
 			// Test scope value
@@ -93,17 +93,17 @@
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Projects) {
 			// Create a sample Project object
 			var sampleProjectPostData = new Projects({
-				name: 'New Project'
+				title: 'New Project'
 			});
 
 			// Create a sample Project response
 			var sampleProjectResponse = new Projects({
 				_id: '525cf20451979dea2c000001',
-				name: 'New Project'
+				title: 'New Project'
 			});
 
 			// Fixture mock form input values
-			scope.name = 'New Project';
+			scope.title = 'New Project';
 
 			// Set POST response
 			$httpBackend.expectPOST('projects', sampleProjectPostData).respond(sampleProjectResponse);
@@ -113,7 +113,7 @@
 			$httpBackend.flush();
 
 			// Test form inputs are reset
-			expect(scope.name).toEqual('');
+			expect(scope.title).toEqual('');
 
 			// Test URL redirection after the Project was created
 			expect($location.path()).toBe('/projects/' + sampleProjectResponse._id);
@@ -123,7 +123,7 @@
 			// Define a sample Project put data
 			var sampleProjectPutData = new Projects({
 				_id: '525cf20451979dea2c000001',
-				name: 'New Project'
+				title: 'New Project'
 			});
 
 			// Mock Project in scope
