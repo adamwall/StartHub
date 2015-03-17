@@ -54,6 +54,14 @@ describe('Comment Model Unit Tests:', function() {
                 done();
             });
         });
+
+        it('should have error when saving without user', function(done) {
+            comment.author ='';
+            return comment.save(function(err) {
+                should.exist(err);
+                done();
+            });
+        });
 	});
 
 	afterEach(function(done) { 

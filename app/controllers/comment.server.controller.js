@@ -14,14 +14,20 @@ var _ = require('lodash'),
  */
 exports.create = function(req, res) {
     var comment = new Comment(req.body);
-    comment.save(function (err) {
-       if(err) {
-           return res.status(400).send;
-       }
-        else{
-           res.json(comment);
-       }
-    });
+    if(comment.author) {
+        comment.save(function (err) {
+            if (err) {
+                return res.status(400).send;
+            }
+            else {
+                res.json(comment);
+            }
+        });
+    } else{
+        return res.status(401).send({
+            message: 'author does not exist'
+        });
+    }
 };
 
 /**

@@ -78,7 +78,7 @@ describe('Message Route tests', function() {
                         // Get a list of messages
                         agent.get('/messages')
                             .end(function(messagesGetErr, messagesGetRes) {
-                                // Handle message save error
+                                // Handle messages save error
                                 if (messagesGetErr) done(messagesGetErr);
 
                                 // Get Comment list
