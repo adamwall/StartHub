@@ -29,8 +29,12 @@ describe('Project Model Unit Tests:', function() {
 
 		user.save(function() { 
 			project = new Project({
-				name: 'Project Name',
-				user: user
+                title: 'test project',
+                description: 'desc',
+                industry: 'test ind',
+                referred: '',
+                created: Date.now(),
+                user: user
 			});
 
 			done();
@@ -46,7 +50,7 @@ describe('Project Model Unit Tests:', function() {
 		});
 
 		it('should be able to show an error when try to save without name', function(done) { 
-			project.name = '';
+			project.title = '';
 
 			return project.save(function(err) {
 				should.exist(err);

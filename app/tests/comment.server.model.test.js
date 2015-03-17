@@ -6,12 +6,13 @@
 var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
-	Comment = mongoose.model('Comment');
+	Comment = mongoose.model('Comment'),
+    Project = mongoose.model('Project');
 
 /**
  * Globals
  */
-var user, comment;
+var user, comment, project;
 
 /**
  * Unit tests
@@ -27,10 +28,24 @@ describe('Comment Model Unit Tests:', function() {
 			password: 'password'
 		});
 
+        //project._id = '111';
+        //project = new Project({
+        //    title: 'test project',
+        //    description: 'desc',
+        //    industry: 'test ind',
+        //    referred: '',
+        //    created: Date.now,
+        //    user: user
+        //});
+        //
+        //project.save();
+
 		user.save(function() { 
 			comment = new Comment({
-				// Add model fields
-				// ...
+                projectid: '111111111111',
+                message: 'Hello World',
+                author: 'username',
+                date: Date.now()
 			});
 
 			done();

@@ -38,7 +38,12 @@ describe('Project CRUD tests', function() {
 		// Save a user to the test db and create new Project
 		user.save(function() {
 			project = {
-				name: 'Project Name'
+                title: 'Project Name',
+                description: 'desc',
+                industry: 'test ind',
+                referred: '',
+                created: Date.now(),
+                user: user._id
 			};
 
 			done();
@@ -52,7 +57,6 @@ describe('Project CRUD tests', function() {
 			.end(function(signinErr, signinRes) {
 				// Handle signin error
 				if (signinErr) done(signinErr);
-
 				// Get the userId
 				var userId = user.id;
 
@@ -75,7 +79,7 @@ describe('Project CRUD tests', function() {
 
 								// Set assertions
 								(projects[0].user._id).should.equal(userId);
-								(projects[0].name).should.match('Project Name');
+								(projects[0].title).should.match('Project Name');
 
 								// Call the assertion callback
 								done();
@@ -96,7 +100,7 @@ describe('Project CRUD tests', function() {
 
 	it('should not be able to save Project instance if no name is provided', function(done) {
 		// Invalidate name field
-		project.name = '';
+		project.title = '';
 
 		agent.post('/auth/signin')
 			.send(credentials)
@@ -142,7 +146,7 @@ describe('Project CRUD tests', function() {
 						if (projectSaveErr) done(projectSaveErr);
 
 						// Update Project name
-						project.name = 'WHY YOU GOTTA BE SO MEAN?';
+						project.title = 'WHY YOU GOTTA BE SO MEAN?';
 
 						// Update existing Project
 						agent.put('/projects/' + projectSaveRes.body._id)
@@ -154,7 +158,7 @@ describe('Project CRUD tests', function() {
 
 								// Set assertions
 								(projectUpdateRes.body._id).should.equal(projectSaveRes.body._id);
-								(projectUpdateRes.body.name).should.match('WHY YOU GOTTA BE SO MEAN?');
+								(projectUpdateRes.body.title).should.match('WHY YOU GOTTA BE SO MEAN?');
 
 								// Call the assertion callback
 								done();
@@ -192,8 +196,7 @@ describe('Project CRUD tests', function() {
 			request(app).get('/projects/' + projectObj._id)
 				.end(function(req, res) {
 					// Set assertion
-					res.body.should.be.an.Object.with.property('name', project.name);
-
+					res.body.should.be.an.Object.with.property('title', project.title);
 					// Call the assertion callback
 					done();
 				});
