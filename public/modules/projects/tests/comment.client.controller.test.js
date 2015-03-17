@@ -6,6 +6,7 @@
 		// Initialize global variables
 		var CommentController,
             ProjectController,
+            AuthenticationController,
 			scope,
 			$httpBackend,
 			$stateParams,
@@ -54,6 +55,10 @@
                 $scope: scope
             })
 
+            AuthenticationController = $controller('AuthenticationController', {
+                $scope: scope
+            })
+
 		}));
 
 		it('Should post comments on existing projects while logged in', inject(function(Projects) {
@@ -67,6 +72,13 @@
 
             // Set GET response
             $httpBackend.expectGET('projects').respond(sampleProjects);
+
+            // Signin the user
+            scope.credentials = {
+                username: 'username',
+                password: 'password'
+            }
+            scope.signin();
             
             scope.sendComment();
             console.log(scope)
