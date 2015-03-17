@@ -5,6 +5,7 @@
 	describe('Comment Controller Tests', function() {
 		// Initialize global variables
 		var CommentController,
+            ProjectController,
 			scope,
 			$httpBackend,
 			$stateParams,
@@ -48,11 +49,27 @@
 			CommentController = $controller('CommentController', {
 				$scope: scope
 			});
+
+            ProjectController = $controller('ProjectsController', {
+                $scope: scope
+            })
+
 		}));
 
-		it('Should do some controller test', inject(function() {
-			// The test logic
-			// ...
+		it('Should post comments on existing projects while logged in', inject(function(Projects) {
+            // Create sample Project using the Projects service
+            var sampleProject = new Projects({
+                name: 'New Project'
+            });
+
+            // Create a sample Projects array that includes the new Project
+            var sampleProjects = [sampleProject];
+
+            // Set GET response
+            $httpBackend.expectGET('projects').respond(sampleProjects);
+            
+            scope.sendComment();
+            console.log(scope)
 		}));
 	});
 }());
