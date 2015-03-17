@@ -17,27 +17,32 @@ exports.sendMessage = function(req, res) {
     var message = new Messages(req.body);
 
     //check if the user the message is sent to exists
-    User.find({username : message.userTo}, function (err, docs) {
-        if (docs.length){
-            //the user exists
-            message.save(function (err) {
-                if (err) {
-                    return res.status(400).send({
-                        message: errorHandler.getErrorMessage(err)
-                    });
-                }
-                else {
-                    res.json(message);
-                }
-            });
-        }else{
-            return res.status(400).send({
-               message: 'User does not exist'
-            });
-        }
-    });
-
-
+    if(message.userFrom){
+        User.find({username : message.userTo}, function (err, docs) {
+            if (docs.length){
+                //the user exists
+                message.save(function (err) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    }
+                    else {
+                        res.json(message);
+                    }
+                });
+            }else{
+                return res.status(400).send({
+                    message: 'User does not exist'
+                });
+            }
+        });
+    }
+    else{
+        res.status(401).send({
+            message: 'Not logged in'
+        });
+    }
 };
 
 /**
