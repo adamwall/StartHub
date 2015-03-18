@@ -22,9 +22,9 @@ var VoteSchema = new Schema({
 	},
 	upOrDown: {
 		type: String,
-		require: 'vote required'
+		require: 'vote required',
 		trim: true
-	}
+	},
 	date: {
 		type: Date,
 		default: Date.now
