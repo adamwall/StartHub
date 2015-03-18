@@ -89,12 +89,12 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
 
         $scope.vote = function(param) {
             if (param === 1 ) {
-                alert("up");
+                alert('up');
             }
             if (param === 2 ) {
-                alert("down");
+                alert('down');
             }
-        }
+        };
         /*
 
         $scope.upVote = function() {

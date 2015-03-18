@@ -81,7 +81,8 @@
             scope.signin();
             
             scope.sendComment();
-            console.log(scope)
-		}));
+            console.log(scope);
+		});
+		);
 	});
-}());
+});
