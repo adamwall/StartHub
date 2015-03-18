@@ -87,6 +87,24 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
         };
         */
 
+        $scope.vote = function(param) {
+            if (param === 1 ) {
+                alert("up");
+            }
+            if (param === 2 ) {
+                alert("down");
+            }
+        }
+        /*
+
+        $scope.upVote = function() {
+            alert("up");
+        }
+
+        $scope.downVote =function() {
+            alert("down");
+        }
+*/
     }
 ]);
 
