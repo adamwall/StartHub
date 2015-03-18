@@ -65,6 +65,11 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
         // Find a list of Projects
         $scope.find = function() {
             $scope.projects = Projects.query();
+
+            var upVoteCount = 3;
+            var downVoteCount = 7;
+            $scope.upVoteCount = upVoteCount;
+            $scope.downVoteCount = downVoteCount;
         };
 
 		// Find existing Project
@@ -74,7 +79,32 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
 			});
 		};
 
+        //Votes =============
+        /*
+        $scope.changeVote = function(vote, flag) {
+            $scope.vote = vote == flag ? 'None' : flag;
+            alert($scope.vote);
+        };
+        */
 
+        $scope.vote = function(param) {
+            if (param === 1 ) {
+                alert("up");
+            }
+            if (param === 2 ) {
+                alert("down");
+            }
+        }
+        /*
+
+        $scope.upVote = function() {
+            alert("up");
+        }
+
+        $scope.downVote =function() {
+            alert("down");
+        }
+*/
     }
 ]);
 

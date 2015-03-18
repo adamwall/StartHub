@@ -18,10 +18,19 @@
 	font-size: medium;
 }
 
+#project-title {
+	font-weight: 800;
+	color: blue;
+}
+
 hr {
 	border: 0;
 	height: 1px;
 	background: #333;
+	background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+	background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+	background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+	background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
 }
 
 .project-body {
@@ -33,10 +42,11 @@ hr {
 	font-size: medium;
 }
 
-.comment-author {
-    font-size: xx-small;
+.up{
+	color: green;
 }
 
-.comment-body{
-    font-size: medium;
+.down{
+	color: red;
 }
+

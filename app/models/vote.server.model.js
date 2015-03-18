@@ -10,8 +10,26 @@ var mongoose = require('mongoose'),
  * Vote Schema
  */
 var VoteSchema = new Schema({
-	// Vote model fields   
-	// ...
+	projectid: {
+		type: String,
+		required: 'projectid required',
+		trim: true
+	},
+	userid: {
+		type: String,
+		require: 'userid required',
+		trim: true
+	},
+	upOrDown: {
+		type: String,
+		require: 'vote required',
+		trim: true
+	},
+	date: {
+		type: Date,
+		default: Date.now
+	}
+
 });
 
 mongoose.model('Vote', VoteSchema);
