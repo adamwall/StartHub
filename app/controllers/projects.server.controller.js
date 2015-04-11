@@ -137,6 +137,19 @@ exports.saveImg = function(req, res){
     });
 };
 
+exports.getImg =  function(req, res){
+    var projectId = req.project._id;
+    fs.exists(path.join(__dirname, '../img/' + projectId + '/logo.jpg'), function(exists){
+        if(exists){
+            res.sendFile(path.join(__dirname, '../img/' + projectId + '/logo.jpg'));
+        }
+        else{
+            //we want the default logo
+            res.sendFile(path.join(__dirname, '../img/default.jpg'));
+        }
+    });
+};
+
 
 /*exports.get_aws_sign = function(req, res){
         aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
