@@ -30,12 +30,24 @@ module.exports = function(app) {
         var projectId = req.project._id;
         var img_dir = path.join(__dirname, '../img/' + projectId + '/');
         mkdirSync(img_dir);
-        var img_path = path.join(img_dir, file_.originalFilename);
+        var img_path = path.join(img_dir, 'logo.jpg');
         console.log(img_path);
         fs.rename(req.files.file.path, img_path, function(err){
             if(err) console.log('ERROr ' + err);
             console.log('completed')
         })
+    });
+    app.get('/projects/img/:projectId', function(req, res){
+        var projectId = req.project._id;
+        fs.exists(path.join(__dirname, '../img/' + projectId + '/logo.jpg'), function(exists){
+            if(exists){
+                res.sendFile(path.join(__dirname, '../img/' + projectId + '/logo.jpg'));
+            }
+            else{
+                //we want the default logo
+                res.sendFile(path.join(__dirname, '../img/default.jpg'));
+            }
+        });
     });
 
 	app.route('/projects/:projectId')
