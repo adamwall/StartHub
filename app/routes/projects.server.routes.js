@@ -13,8 +13,8 @@ module.exports = function(app) {
 		.get(projects.list)
 		.post(users.requiresLogin, projects.create);
 
-    app.route('/projects/img/:projectId', multipartMiddleware)
-        .post(projects.saveImg);
+    app.route('/projects/img/:projectId')
+        .post(multipartMiddleware, projects.saveImg);
 
 	app.route('/projects/:projectId')
 		.get(projects.read)

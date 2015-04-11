@@ -119,7 +119,7 @@ exports.saveImg = function(req, res){
         try {
             fs.mkdirSync(path);
         } catch(e) {
-            if ( e.code != 'EEXIST' ) throw e;
+            if ( e.code !== 'EEXIST' ) throw e;
         }
     };
 
@@ -133,7 +133,7 @@ exports.saveImg = function(req, res){
     console.log(img_path);
     fs.rename(req.files.file.path, img_path, function(err){
         if(err) console.log('ERROr ' + err);
-        console.log('completed')
+        console.log('completed');
     });
 };
 
