@@ -13,9 +13,6 @@ module.exports = function(app) {
 		.get(projects.list)
 		.post(users.requiresLogin, projects.create);
 
-
-
-
     app.route('/projects/img/:projectId')
         .post(multipartMiddleware, projects.saveImg)
         .get(projects.getImg);

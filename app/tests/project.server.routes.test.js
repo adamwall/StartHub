@@ -2,6 +2,8 @@
 
 var should = require('should'),
 	request = require('supertest'),
+    fs = require('fs'),
+    path = require('path'),
 	app = require('../../server'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
@@ -228,7 +230,7 @@ describe('Project CRUD tests', function() {
 							.expect(200)
 							.end(function(projectDeleteErr, projectDeleteRes) {
 								// Handle Project error error
-								if (projectDeleteErr) done(projectDeleteErr);
+								if(projectDeleteErr)done(projectDeleteErr);
 
 								// Set assertions
 								(projectDeleteRes.body._id).should.equal(projectSaveRes.body._id);
@@ -262,6 +264,43 @@ describe('Project CRUD tests', function() {
 
 		});
 	});
+
+    it('should be able to save logo and get logo after creating project', function(done) {
+        agent.post('/auth/signin')
+            .send(credentials)
+            .expect(200)
+            .end(function (signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Project
+                agent.post('/projects')
+                    .send(project)
+                    .expect(200)
+                    .end(function (projectSaveErr, projectSaveRes) {
+                        // Handle Project save error
+                        if (projectSaveErr) done(projectSaveErr);
+                        var projectId = projectSaveRes.body._id;
+                        //var img = fs.openSync( path.join( __dirname , '/../img/default.jpg') ,'r' );
+                        agent.post('/projects/img/' + projectId)
+                            .attach('image', path.join( __dirname , '/../img/default.jpg') )
+                            .expect(200)
+                            .end(function (imgSaveErr, imgSaveRes) {
+                                //if(imgSaveErr) done(imgSaveErr);
+                                //try to get image now
+                                agent.get('/projects/img/' + projectId)
+                                    .expect(200)
+                                    .end(function() {
+                                        done();
+                                    })
+                            })
+                    });
+            });
+    });
+
+
 
 	afterEach(function(done) {
 		User.remove().exec();
