@@ -129,7 +129,7 @@ exports.saveImg = function(req, res){
     var projectId = req.project._id;
     var img_dir = path.join(__dirname, '../img/' + projectId + '/');
     mkdirSync(img_dir);
-    var img_path = path.join(img_dir, file_.originalFilename);
+    var img_path = path.join(img_dir, 'logo.jpg');
     console.log(img_path);
     fs.rename(req.files.file.path, img_path, function(err){
         if(err) console.log('ERROr ' + err);
