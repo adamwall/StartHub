@@ -36,6 +36,11 @@ var ProjectSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	tags:{
+	        type: String,
+	        default: '',
+	        trim: true
+    },
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
