@@ -82,7 +82,7 @@
             
             scope.sendComment();
             console.log(scope);
-		});
+		})
 		);
 	});
 });
