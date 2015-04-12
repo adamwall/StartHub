@@ -88,8 +88,7 @@
 				<p><span data-ng-bind="project.industry"></span></p>
 
                 <div id="tags">
-                    <span class="tag"><p><span data-ng-bind="project.tags"></span></p></span>
-                    <input type="text" value="" placeholder="Add a tag" />
+                    <span class="tag" ng-repeat="item in project.tags.split(' ')">{{item}}</span>
                 </div>
 			</div>
 		</em>
@@ -121,11 +120,4 @@
             </div>
         </form>
     </div>
-    <script>
-        $(function(){
-            $('#tags').on('click','.tag',function(){
-                if(confirm("Really delete this tag?")) $(this).remove();
-            });
-        });
-    </script>
 </section>
