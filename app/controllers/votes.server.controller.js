@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	mongoose = require('mongoose'),
 	Vote = mongoose.model('Vote'),
     _ = require('lodash');
 
@@ -18,6 +17,7 @@ exports.create = function(req, res) {
 		if (docs.length){
 			//if user exist, just update
 			//do nothing for now
+            console.log('this block is no longer empty');
 
 		} else {
 			//if user does not exist, 
@@ -31,7 +31,7 @@ exports.create = function(req, res) {
 				}
 			});
 		}
-	})
+	});
 };
 
 /**
