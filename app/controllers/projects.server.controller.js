@@ -8,6 +8,13 @@ var mongoose = require('mongoose'),
 	Project = mongoose.model('Project'),
 	_ = require('lodash');
 
+var fs = require('fs');
+var path = require('path');
+var aws = require('aws-sdk');
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = 'starthub.img';
+
 /**
  * Create a Project
  */
@@ -105,3 +112,71 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+
+exports.saveImg = function(req, res){
+
+    var mkdirSync = function (path) {
+        try {
+            fs.mkdirSync(path);
+        } catch(e) {
+            if ( e.code !== 'EEXIST' ) throw e;
+        }
+    };
+
+    console.log(req.files.file.path);
+    var projectId = req.project._id;
+    var img_dir = path.join(__dirname, '../img/' + projectId + '/');
+    mkdirSync(img_dir);
+    var img_path = path.join(img_dir, 'logo.jpg');
+    fs.rename(req.files.file.path, img_path, function(err){
+        if(err){
+            console.log('ERROr ' + err);
+            res.sendStatus(400);
+        }
+        else {
+            console.log('completed');
+            res.sendStatus(200);
+        }
+    });
+};
+
+exports.getImg =  function(req, res){
+    var projectId = req.project._id;
+    fs.exists(path.join(__dirname, '../img/' + projectId + '/logo.jpg'), function(exists){
+        if(exists){
+            res.statusCode= 200;
+            res.sendFile(path.join(__dirname, '../img/' + projectId + '/logo.jpg'));
+        }
+        else{
+            //we want the default logo
+            res.statusCode = 200;
+            res.sendFile(path.join(__dirname, '../img/default.jpg'));
+        }
+    });
+};
+
+
+/*exports.get_aws_sign = function(req, res){
+        aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+        var s3 = new aws.S3();
+        var s3_params = {
+            Bucket: S3_BUCKET,
+            Key: req.query.s3_object_name,
+            Expires: 60,
+            ContentType: req.query.s3_object_type,
+            ACL: 'public-read'
+        };
+        s3.getSignedUrl('putObject', s3_params, function(err, data){
+            if(err){
+                console.log(err);
+            }
+            else{
+                var return_data = {
+                    signed_request: data,
+                    url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.query.s3_object_name
+                };
+                res.write(JSON.stringify(return_data));
+                res.end();
+            }
+        });
+});*/
