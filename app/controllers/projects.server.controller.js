@@ -123,17 +123,20 @@ exports.saveImg = function(req, res){
         }
     };
 
-    var file_ = req.files.file;
-    console.log(file_);
     console.log(req.files.file.path);
     var projectId = req.project._id;
     var img_dir = path.join(__dirname, '../img/' + projectId + '/');
     mkdirSync(img_dir);
     var img_path = path.join(img_dir, 'logo.jpg');
-    console.log(img_path);
     fs.rename(req.files.file.path, img_path, function(err){
-        if(err) console.log('ERROr ' + err);
-        console.log('completed');
+        if(err){
+            console.log('ERROr ' + err);
+            res.sendStatus(400);
+        }
+        else {
+            console.log('completed');
+            res.sendStatus(200);
+        }
     });
 };
 
@@ -141,10 +144,12 @@ exports.getImg =  function(req, res){
     var projectId = req.project._id;
     fs.exists(path.join(__dirname, '../img/' + projectId + '/logo.jpg'), function(exists){
         if(exists){
+            res.statusCode= 200;
             res.sendFile(path.join(__dirname, '../img/' + projectId + '/logo.jpg'));
         }
         else{
             //we want the default logo
+            res.statusCode = 200;
             res.sendFile(path.join(__dirname, '../img/default.jpg'));
         }
     });

@@ -266,6 +266,7 @@ describe('Project CRUD tests', function() {
 	});
 
     it('should be able to save logo and get logo after creating project', function(done) {
+        this.timeout(5000);
         agent.post('/auth/signin')
             .send(credentials)
             .expect(200)
@@ -285,9 +286,10 @@ describe('Project CRUD tests', function() {
                         var projectId = projectSaveRes.body._id;
                         //var img = fs.openSync( path.join( __dirname , '/../img/default.jpg') ,'r' );
                         agent.post('/projects/img/' + projectId)
-                            .attach('image', path.join( __dirname , '/../img/default.jpg') )
+                            .attach('file', path.join( __dirname , '/../img/default.jpg') )
                             .expect(200)
                             .end(function (imgSaveErr, imgSaveRes) {
+                                console.log('aaaaa');
                                 //if(imgSaveErr) done(imgSaveErr);
                                 //try to get image now
                                 agent.get('/projects/img/' + projectId)
