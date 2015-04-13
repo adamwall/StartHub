@@ -8,8 +8,6 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
 	function($scope, $stateParams, $location, Authentication, Projects) {
         $scope.authentication = Authentication;
 
-
-
         // Create new Project
         $scope.create = function() {
             // Create new Project object
@@ -79,6 +77,12 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
 				projectId: $stateParams.projectId
 			});
 		};
+
+        // Find recommended projects
+        $scope.getInterestedProject = function() {
+            $scope.projects = Projects.query();
+            $scope.projects_titles = [];
+        };
 
         //Votes =============
         /*

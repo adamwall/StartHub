@@ -47,8 +47,16 @@
     </div>
 
 
-
     <div class="alert alert-warning text-center" data-ng-hide="!projects.$resolved || projects.length">
     	No Projects yet, why don't you <a href="/#!/projects/create">create one</a>?
     </div>
 </section>
+
+<section data-ng-controller="ProjectsController" data-ng-init="getInterestedProject()">
+    <h3>Recommended Projects</h3>
+    <div class="project" ng-repeat="project in projects">
+        {{projects_titles}}
+    </div>
+
+
+</section>-
