@@ -297,8 +297,8 @@ describe('Project CRUD tests', function() {
                                     .expect(200)
                                     .end(function() {
                                         done();
-                                    })
-                            })
+                                    });
+                            });
                     });
             });
     });
@@ -390,5 +390,5 @@ async.each(['travis is great','elephants?','#$%^&is the name of the game'], func
             done();
         });
     });
-    callback()
+    callback();
 });

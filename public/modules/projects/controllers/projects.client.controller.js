@@ -25,8 +25,8 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
             }
         });
         uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-            $scope.error_img = "There was a problem with your image, make sure it is the right type(jpg, jpeg, png, bmp, gif)" +
-            " or that it is less than 1MB";
+            $scope.error_img = 'There was a problem with your image, make sure it is the right type(jpg, jpeg, png, bmp, gif)' +
+            ' or that it is less than 1MB';
         };
         uploader.onAfterAddingFile = function (fileItem) {
             $scope.error_img = null;
