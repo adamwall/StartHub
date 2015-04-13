@@ -59,6 +59,11 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [validateLocalStrategyPassword, 'Password should be longer']
 	},
+	interests: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	salt: {
 		type: String
 	},

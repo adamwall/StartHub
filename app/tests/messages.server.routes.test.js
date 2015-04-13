@@ -138,7 +138,7 @@ describe('Message Route tests', function() {
                             // Set assertion
                             res.body.should.be.an.Array.with.lengthOf(2);
 
-                            // Call the assertion callback
+                            // Call the assertion callback22
                             done();
                         });
 

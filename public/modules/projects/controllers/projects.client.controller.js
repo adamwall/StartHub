@@ -7,7 +7,7 @@ var projectsApp = angular.module('projects');
 projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'FileUploader',
 	function($scope, $stateParams, $location, Authentication, Projects, FileUploader) {
         $scope.authentication = Authentication;
-
+        
         //image uploader
         var uploader = $scope.uploader = new FileUploader();
         // FILTERS

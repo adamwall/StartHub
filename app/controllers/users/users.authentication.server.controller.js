@@ -134,6 +134,7 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 							username: availableUsername,
 							displayName: providerUserProfile.displayName,
 							email: providerUserProfile.email,
+							interests: providerUserProfile.interests,
 							provider: providerUserProfile.provider,
 							providerData: providerUserProfile.providerData
 						});
