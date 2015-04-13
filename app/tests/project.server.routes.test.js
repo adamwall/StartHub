@@ -310,7 +310,7 @@ describe('Project CRUD tests', function() {
 	});
 });
 
-async.each([1,2,3], function(itemNumber, callback) {
+async.each(['travis is great','elephants?','#$%^&is the name of the game'], function(name, callback) {
     describe('Param Test', function() {
         beforeEach(function (done) {
             // Create user credentials
@@ -333,7 +333,7 @@ async.each([1,2,3], function(itemNumber, callback) {
             // Save a user to the test db and create new Project
             user.save(function () {
                 project = {
-                    title: 'Project Name',
+                    title: name,
                     description: 'desc',
                     industry: 'test ind',
                     referred: '',
@@ -345,7 +345,7 @@ async.each([1,2,3], function(itemNumber, callback) {
             });
         });
 
-        it('should be able to save Project instance if logged in', function (done) {
+        it('should be able to save Project instance with name:' + name +' if logged in', function (done) {
             agent.post('/auth/signin')
                 .send(credentials)
                 .expect(200)
@@ -374,7 +374,7 @@ async.each([1,2,3], function(itemNumber, callback) {
 
                                     // Set assertions
                                     (projects[0].user._id).should.equal(userId);
-                                    (projects[0].title).should.match('Project Name');
+                                    (projects[0].title).should.match(name);
 
                                     // Call the assertion callback
                                     done();
