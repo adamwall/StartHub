@@ -1,32 +1,32 @@
 <head>
-        <style>
-            #tags{
-                float:left;
-                border:1px solid #ccc;
-                padding:5px;
-                font-family:Arial;
-            }
-            #tags span.tag{
-                         cursor:pointer;
-                         display:block;
-                         float:left;
-                         color:#fff;
-                         background:#689;
-                         padding:5px;
-                         padding-right:25px;
-                         margin:4px;
-                     }
-            #tags span.tag:hover{
-                         opacity:0.7;
-                     }
-            #tags input{
-                         background:#eee;
-                         border:0;
-                         margin:4px;
-                         padding:7px;
-                         width:auto;
-                     }
-        </style>
+    <style>
+        #tags{
+            float:left;
+            border:1px solid #ccc;
+            padding:5px;
+            font-family:Arial;
+        }
+        #tags span.tag{
+            cursor:pointer;
+            display:block;
+            float:left;
+            color:#fff;
+            background:#689;
+            padding:5px;
+            padding-right:25px;
+            margin:4px;
+        }
+        #tags span.tag:hover{
+            opacity:0.7;
+        }
+        #tags input{
+            background:#eee;
+            border:0;
+            margin:4px;
+            padding:7px;
+            width:auto;
+        }
+    </style>
 </head>
 <section data-ng-controller="ProjectsController" data-ng-init="getSelectedProject()">
 	<div class="page-header">
@@ -86,8 +86,9 @@
 				<p><span data-ng-bind="project.description"></span></p>
 				<h3>Target Industry:</h3>
 				<p><span data-ng-bind="project.industry"></span></p>
-
+                <h3>Tags</h3>
                 <div id="tags">
+
                     <span class="tag" ng-repeat="item in project.tags.split(' ')">{{item}}</span>
                 </div>
 			</div>

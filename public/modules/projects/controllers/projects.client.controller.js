@@ -17,7 +17,8 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 title: this.title,
                 description: this.description,
                 industry: this.industry,
-                referred: this.referred
+                referred: this.referred,
+                tags: this.tags
             });
 
             // Redirect after save
