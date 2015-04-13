@@ -77,12 +77,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
 				projectId: $stateParams.projectId
 			});
 		};
-
-        // Find recommended projects
-        $scope.getInterestedProject = function() {
-            $scope.projects = Projects.query();
-            $scope.projects_titles = [];
-        };
+        
 
         //Votes =============
         /*
