@@ -13,13 +13,15 @@
             </div><!-- /input-group -->
         </div>
         <div class="col-xs-12 col-sm-4 text-center">
+            <a href="/#!/projects/create">
             <button type="button" class="btn btn-success text-center">
                 <i class="glyphicon glyphicon-folder-open"></i> <br>
                 New Project
             </button>
+            </a>
         </div>
     </div>
-    </br>
+    <hr>
     </br>
     <div class="list-group">
         <div class="col-xs-6 col-sm-4" data-ng-repeat="project in projects | filter:searchText">
@@ -52,13 +54,12 @@
     	No Projects yet, why don't you <a href="/#!/projects/create">create one</a>?
     </div>
 </section>
-<hr>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 <section data-ng-controller="ProjectsController" data-ng-init="find()">
     <div class="page-header">
         <h1>Recommended Projects</h1>
     </div>
-
+    <hr>
     <div class="list-group">
         <div class="col-xs-6 col-sm-4" data-ng-repeat="project in projects | filter:authentication.user.interests">
             <button type="button" ng-click="vote(1)" class="btn btn-success btn-xs active">Up</button>
