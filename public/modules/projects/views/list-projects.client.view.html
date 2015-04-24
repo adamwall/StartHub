@@ -26,67 +26,66 @@
 
     <div class="list-group">
         <div class="col-xs-6 col-sm-4" data-ng-repeat="project in projects | filter:searchText" ng-init="getVotes(project)">
-            <div class="well" ng-show="project.userHasVoted" ng-if="project.userVote.score==1">
-                <div>
-                    <button type="button" ng-click="deleteVote(project)" class="btn btn-default btn-xs active">
-                        <i class="glyphicon glyphicon-arrow-up" style="color:orange"></i>
-                        {{project.upCount}}
-                    </button>
-                </div>
-                <div>
-                    <button type="button" ng-click="updateVote(-1, project)"class="btn btn-default btn-xs active">
-                        <i class="glyphicon glyphicon-arrow-down"></i>
-                        {{project.downCount}}
-                    </button>
-                </div>
-            </div>
-
-            <div class="well" ng-show="project.userHasVoted" ng-if="project.userVote.score==-1">
-                <div>
-                    <button type="button" ng-click="updateVote(1, project)" class="btn btn-default btn-xs active">
-                        <i class="glyphicon glyphicon-arrow-up"></i>
-                        {{project.upCount}}
-                    </button>
-                </div>
-                <div>
-                    <button type="button" ng-click="deleteVote(project)"class="btn btn-default btn-xs active">
-                        <i class="glyphicon glyphicon-arrow-down" style="color:cornflowerblue"></i>
-                        {{project.downCount}}
-                    </button>
-                </div>
-            </div>
-
-            <div class="well" ng-show="!project.userHasVoted">
-                <div>
-                    <button type="button" ng-click="vote(1, project)" class="btn btn-default btn-xs active">
-                        <i class="glyphicon glyphicon-arrow-up"></i>
-                        {{project.upCount}}
-                    </button>
-                </div>
-                <div>
-                    <button type="button" ng-click="vote(-1, project)"class="btn btn-default btn-xs active">
-                        <i class="glyphicon glyphicon-arrow-down"></i>
-                        {{project.downCount}}
-                    </button>
-                </div>
-            </div>
-
-
-            <a  data-ng-href="#!/projects/{{project._id}}" class="list-group-item">
+            <div class="list-group-item">
                 <h4 class="cust-list text-center">
                     <!--<i class="glyphicon glyphicon-folder-open cust-list"></i>-->
-                    <img ng-src="/projects/img/{{project._id}}" width="300" height="100"/>
+                   <a data-ng-href="#!/projects/{{project._id}}"> <img ng-src="/projects/img/{{project._id}}" width="300" height="100"/></a>
                     
                 </h4>
                 <div class="row">
                     <div class="col-xs-10 col-xs-offset-1">
-                        <h4>{{project.title}} {{project.description}} </h4>
+                        <a data-ng-href="#!/projects/{{project._id}}"><h4>{{project.title}}</h4></a>
+                        <h6>{{project.description}}</h6>
                         <small class="list-group-item-text text-muted">
                             <span data-ng-bind="project.created | date:'medium'"></span>
                         </small>
                     </div>
+                    <div class="well-sm" style="float:right" ng-show="project.userHasVoted" ng-if="project.userVote.score==1">
+                        <div>
+                            <button type="button" ng-click="deleteVote(project)" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-arrow-up" style="color:orange"></i>
+                                {{project.upCount}}
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" ng-click="updateVote(-1, project)"class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-arrow-down"></i>
+                                {{project.downCount}}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="well-sm" style="float:right" ng-show="project.userHasVoted" ng-if="project.userVote.score==-1">
+                        <div>
+                            <button type="button" ng-click="updateVote(1, project)" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-arrow-up"></i>
+                                {{project.upCount}}
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" ng-click="deleteVote(project)"class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-arrow-down" style="color:cornflowerblue"></i>
+                                {{project.downCount}}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="well-sm" style="float:right" ng-show="!project.userHasVoted">
+                        <div>
+                            <button type="button" ng-click="vote(1, project)" class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-arrow-up"></i>
+                                {{project.upCount}}
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" ng-click="vote(-1, project)"class="btn btn-default btn-xs">
+                                <i class="glyphicon glyphicon-arrow-down"></i>
+                                {{project.downCount}}
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </a>
+            </div>
            
         </div>
     </div>
@@ -94,27 +93,7 @@
 
     <div class="alert alert-warning text-center" data-ng-hide="!projects.$resolved || projects.length">
     	No Projects yet, why don't you <a href="/#!/projects/create">create one</a>?
-    </div>
-</section>
-
-<section data-ng-controller="ProjectsController" data-ng-init="find()">
-    <div class="page-header">
-        <h1>Recommended Projects</h1>
-    </div>
-    <hr>
-    <div class="list-group">
-        <div class="col-xs-6 col-sm-4" data-ng-repeat="project in projects | filter:authentication.user.interests">
-            <button type="button" ng-click="vote(1, project)" class="btn btn-success btn-xs active">Up</button>
-            <button type="button" ng-click="vote(-1, project)"class="btn btn-danger btn-xs active">Down</button>
-
-            <a  data-ng-href="#!/projects/{{project._id}}" class="list-group-item">
-                <h4 class="cust-list text-center">
-                    <i class="glyphicon glyphicon-folder-open cust-list"></i>
-
-                </h4>
-                <div class="row">
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <h4>{{project.title}} {{project.description}} </h4>
+ ject.title}} {{project.description}} </h4>
                         <small class="list-group-item-text text-muted">
                             <span data-ng-bind="project.created | date:'medium'"></span>
                         </small>

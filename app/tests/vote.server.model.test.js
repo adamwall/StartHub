@@ -29,8 +29,9 @@ describe('Vote Model Unit Tests:', function() {
 
 		user.save(function() { 
 			vote = new Vote({
-				// Add model fields
-				// ...
+				projectid: '11111111111',
+				userid: user._id,
+				score: 1
 			});
 
 			done();

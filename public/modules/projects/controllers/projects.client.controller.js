@@ -116,7 +116,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
             vote.$save(function(respone) {
                 $scope.getVotes(project);
             }, function(errorMessage){
-                alert(errorMessage);
+                alert(errorMessage.data.message);
             });
 
         };
