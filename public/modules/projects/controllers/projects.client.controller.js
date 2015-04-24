@@ -121,15 +121,42 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 'score': param
             });
             vote.$save(function(respone) {
-
+                $scope.getVoteCounts(project);
             }, function(errorMessage){
                 alert(errorMessage);
             });
 
         };
 
-        $scope.upVoteCount = function(project){
-          Votes.query({projectId: project._id});
+        $scope.getVoteCounts = function(project){
+          Votes.query({projectId: project._id}, function(result){
+              if(result.length==0){
+                  project.upCount=0;
+                  project.downCount=0;
+              }
+              if(result.length==1){
+                  if(result[0]['_id']==1){
+                      project.upCount=result[0]['total'];
+                      project.downCount = 0;
+                  }
+                  else{
+                      project.downCount = Math.abs(result[0]['total']);
+                      project.upCount=0;
+                  }
+              }
+              if(result.length==2){
+                  if(result[0]['_id']==1){
+                      project.upCount=result[0]['total'];
+                      project.downCount = Math.abs(result[1]['total']);
+                  }
+                  else{
+                      project.downCount = Math.abs(result[0]['total']);
+                      project.upCount=result[1]['total'];
+                  }
+              }
+          });
+          //console.log($scope.votes.length);
+            //$scope.upCount=;
         };
         /*
 

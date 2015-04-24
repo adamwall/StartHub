@@ -70,13 +70,17 @@ exports.delete = function(req, res) {
  * List of Votes
  */
 exports.list = function(req, res) {
-	console.log(req.project);
 	Vote.aggregate([
 		{$match:{projectid: ''+req.project._id}},
 	{$group:{ _id:"$score" , total:{$sum:"$score"}}}],
 		function(err,result){
-			console.log(result);
-			console.log(err);
+			if(err){
+				console.log(err);
+			}
+			else{
+				console.log(result);
+				res.jsonp(result);
+			}
 		}
 		);
 };
