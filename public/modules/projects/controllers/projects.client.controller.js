@@ -106,67 +106,57 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
 			});
 		};
 
-        //Votes =============
-        /*
-        $scope.changeVote = function(vote, flag) {
-            $scope.vote = vote == flag ? 'None' : flag;
-            alert($scope.vote);
-        };
-        */
+/////////////////////////VOTES//////////////////////////////////
 
         $scope.vote = function(param, project) {
-            console.log(project);
             var vote = new Votes({
                 'projectid': project._id,
                 'score': param
             });
             vote.$save(function(respone) {
-                $scope.getVoteCounts(project);
+                $scope.getVotes(project);
             }, function(errorMessage){
                 alert(errorMessage);
             });
 
         };
 
-        $scope.getVoteCounts = function(project){
-          Votes.query({projectId: project._id}, function(result){
-              if(result.length==0){
-                  project.upCount=0;
-                  project.downCount=0;
-              }
-              if(result.length==1){
-                  if(result[0]['_id']==1){
-                      project.upCount=result[0]['total'];
-                      project.downCount = 0;
+        $scope.getVotes = function(project){
+          Votes.query({projectId: project._id}, function(votes){
+              project.userHasVoted = false;
+              project.userVote = null;
+              var user = Authentication.user;
+              var up = 0;
+              var down = 0;
+              angular.forEach(votes, function(vote){
+                  if(vote.userid == ''+user._id){
+                      project.userHasVoted=true;
+                      project.userVote = vote;
                   }
-                  else{
-                      project.downCount = Math.abs(result[0]['total']);
-                      project.upCount=0;
-                  }
-              }
-              if(result.length==2){
-                  if(result[0]['_id']==1){
-                      project.upCount=result[0]['total'];
-                      project.downCount = Math.abs(result[1]['total']);
-                  }
-                  else{
-                      project.downCount = Math.abs(result[0]['total']);
-                      project.upCount=result[1]['total'];
-                  }
-              }
+                  if(vote.score==1) up++;
+                  else down++;
+              });
+              project.upCount = up;
+              project.downCount = down;
           });
-          //console.log($scope.votes.length);
-            //$scope.upCount=;
         };
-        /*
 
-        $scope.upVote = function() {
-            alert("up");
-        }
+        $scope.updateVote = function(score, project){
+            project.userVote.score = score;
+            project.userVote.$update({ voteId: project.userVote._id },function() {
+                console.log('updated');
+                $scope.getVotes(project);
+            }, function(errorResponse) {
+                $scope.error = errorResponse.data.message;
+            });
+        };
 
-        $scope.downVote =function() {
-            alert("down");
-        }
-*/
+        $scope.deleteVote = function(project){
+          if(project.userVote){
+              project.userVote.$remove(function() {
+                  $scope.getVotes(project);
+              });
+          }
+        };
     }
 ]);

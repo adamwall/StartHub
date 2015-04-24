@@ -56,31 +56,57 @@ exports.read = function(req, res) {
  * Update a Vote
  */
 exports.update = function(req, res) {
+	var vote = req.vote;
+	vote = _.extend(vote , req.body);
 
+	vote.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(vote);
+		}
+	});
+};
+
+exports.voteByID = function(req, res, next, id){
+	Vote.findById(id).exec(function(err, vote) {
+		if (err) return next(err);
+		if (! vote) return next(new Error('Failed to load Project ' + id));
+		req.vote = vote ;
+		next();
+	});
 };
 
 /**
  * Delete an Vote
  */
 exports.delete = function(req, res) {
+	var vote = req.vote ;
 
+	vote.remove(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(vote);
+		}
+	});
 };
 
 /**
  * List of Votes
  */
 exports.list = function(req, res) {
-	Vote.aggregate([
-		{$match:{projectid: ''+req.project._id}},
-	{$group:{ _id:"$score" , total:{$sum:"$score"}}}],
-		function(err,result){
-			if(err){
-				console.log(err);
-			}
-			else{
-				console.log(result);
-				res.jsonp(result);
-			}
+	Vote.find({projectid: req.project._id}).exec(function(err, votes) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(votes);
 		}
-		);
+	});
 };

@@ -32,6 +32,12 @@ module.exports = function(app) {
     app.route('/projects/:projectId/votes')
         .post(users.requiresLogin, votes.hasVoted, votes.create)
         .get(votes.list);
+
+    app.route('/projects/:projectId/votes/:voteId')
+        .put(users.requiresLogin, votes.update)
+        .delete(users.requiresLogin, votes.delete);
+
+    app.param('voteId', votes.voteByID);
 	// Finish by binding the Project middleware
 	app.param('projectId', projects.projectByID);
 };

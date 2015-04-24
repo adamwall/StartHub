@@ -2,7 +2,7 @@
 
 angular.module('projects').factory('Votes', ['$resource',
 	function($resource) {
-		return $resource('projects/:projectId/votes', { projectId: '@projectid'
+		return $resource('projects/:projectId/votes/:voteId', { projectId: '@projectid', voteId: '@_id'
 		}, {
 			update: {
 				method: 'PUT'
