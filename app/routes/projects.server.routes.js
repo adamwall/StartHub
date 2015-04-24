@@ -29,8 +29,9 @@ module.exports = function(app) {
         .get(comment.list)
         .put(comment.delete);
 
-    app.route('/votes')
-        .post(users.requiresLogin, votes.hasVoted, votes.create);
+    app.route('/projects/:projectId/votes')
+        .post(users.requiresLogin, votes.hasVoted, votes.create)
+        .get(votes.list);
 	// Finish by binding the Project middleware
 	app.param('projectId', projects.projectByID);
 };

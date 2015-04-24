@@ -97,16 +97,11 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
         // Find a list of Projects
         $scope.find = function() {
             $scope.projects = Projects.query();
-
-            var upVoteCount = 3;
-            var downVoteCount = 7;
-            $scope.upVoteCount = upVoteCount;
-            $scope.downVoteCount = downVoteCount;
         };
 
 		// Find existing Project
 		$scope.getSelectedProject = function() {
-			$scope.project = Projects.get({ 
+			$scope.project = Projects.get({
 				projectId: $stateParams.projectId
 			});
 		};
@@ -131,6 +126,10 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 alert(errorMessage);
             });
 
+        };
+
+        $scope.upVoteCount = function(project){
+          Votes.query({projectId: project._id});
         };
         /*
 
