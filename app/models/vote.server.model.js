@@ -20,10 +20,9 @@ var VoteSchema = new Schema({
 		require: 'userid required',
 		trim: true
 	},
-	upOrDown: {
-		type: String,
-		require: 'vote required',
-		trim: true
+	score: {
+		type: Number,
+		require: 'vote required'
 	},
 	date: {
 		type: Date,

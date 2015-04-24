@@ -13,23 +13,34 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var vote = new Vote(req.body);
-	Vote.find( {projectid: vote.projectid, userid: vote.userid}, function (err, docs) {
-		if (docs.length){
-			//if user exist, just update
-			//do nothing for now
-            console.log('this block is no longer empty');
-
-		} else {
-			//if user does not exist, 
-			vote.save(function (err) {
-				if(err) {
-					return res.status(400).send({
-                            message: errorHandler.getErrorMessage(err)
-                    });
-				} else {
-					res.json(vote);
-				}
+	vote.userid = req.user._id;
+	vote.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
 			});
+		} else {
+			res.jsonp(vote);
+		}
+	});
+
+};
+
+exports.hasVoted = function(req, res, next) {
+	console.log('middlewear');
+	var vote = new Vote(req.body);
+	vote.userid = req.user._id;
+	Vote.find({projectid: vote.projectid, userid: vote.userid}, function (err, docs) {
+		console.log(docs);
+		console.log(docs.length);
+		if (docs.length) {
+			/*return res.status(400).send({
+			 message: 'Vote already exists'*/
+			res.statusCode = 400;
+			res.end('Vote already exists');
+		}
+		else{
+			next();
 		}
 	});
 };

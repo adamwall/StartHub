@@ -4,8 +4,8 @@
 
 var projectsApp = angular.module('projects');
 
-projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'FileUploader',
-	function($scope, $stateParams, $location, Authentication, Projects, FileUploader) {
+projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'Votes', 'FileUploader',
+	function($scope, $stateParams, $location, Authentication, Projects, Votes, FileUploader) {
         $scope.authentication = Authentication;
         
         //image uploader
@@ -119,13 +119,18 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
         };
         */
 
-        $scope.vote = function(param) {
-            if (param === 1 ) {
-                alert('up');
-            }
-            if (param === 2 ) {
-                alert('down');
-            }
+        $scope.vote = function(param, project) {
+            console.log(project);
+            var vote = new Votes({
+                'projectid': project._id,
+                'score': param
+            });
+            vote.$save(function(respone) {
+
+            }, function(errorMessage){
+                alert(errorMessage);
+            });
+
         };
         /*
 
