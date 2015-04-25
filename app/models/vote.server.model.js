@@ -17,13 +17,12 @@ var VoteSchema = new Schema({
 	},
 	userid: {
 		type: String,
-		require: 'userid required',
+		required: 'userid required',
 		trim: true
 	},
-	upOrDown: {
-		type: String,
-		require: 'vote required',
-		trim: true
+	score: {
+		type: Number,
+		required: 'vote required'
 	},
 	date: {
 		type: Date,

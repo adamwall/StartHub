@@ -4,8 +4,8 @@
 
 var projectsApp = angular.module('projects');
 
-projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'FileUploader',
-	function($scope, $stateParams, $location, Authentication, Projects, FileUploader) {
+projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Projects', 'Votes', 'FileUploader',
+	function($scope, $stateParams, $location, Authentication, Projects, Votes, FileUploader) {
         $scope.authentication = Authentication;
         
         //image uploader
@@ -107,45 +107,79 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
         // Find a list of Projects
         $scope.find = function() {
             $scope.projects = Projects.query();
-
-            var upVoteCount = 3;
-            var downVoteCount = 7;
-            $scope.upVoteCount = upVoteCount;
-            $scope.downVoteCount = downVoteCount;
         };
 
 		// Find existing Project
 		$scope.getSelectedProject = function() {
-			$scope.project = Projects.get({ 
+			$scope.project = Projects.get({
 				projectId: $stateParams.projectId
 			});
 		};
 
-        //Votes =============
-        /*
-        $scope.changeVote = function(vote, flag) {
-            $scope.vote = vote == flag ? 'None' : flag;
-            alert($scope.vote);
+/////////////////////////VOTES//////////////////////////////////
+
+        $scope.vote = function(param, project) {
+            var vote = new Votes({
+                'projectid': project._id,
+                'score': param
+            });
+            vote.$save(function(respone) {
+                if(param==1)project.upCount++;
+                else project.downCount++;
+                project.userVote = vote;
+                project.userHasVoted=true;
+            }, function(errorMessage){
+                alert(errorMessage.data.message);
+            });
+
         };
-        */
 
-        $scope.vote = function(param) {
-            if (param === 1 ) {
-                alert('up');
-            }
-            if (param === 2 ) {
-                alert('down');
-            }
+        $scope.getVotes = function(project){
+          Votes.query({projectId: project._id}, function(votes){
+              project.userHasVoted = false;
+              project.userVote = null;
+              var user = Authentication.user;
+              var up = 0;
+              var down = 0;
+              angular.forEach(votes, function(vote){
+                  if(vote.userid == ''+user._id){
+                      project.userHasVoted=true;
+                      project.userVote = vote;
+                  }
+                  if(vote.score==1) up++;
+                  else down++;
+              });
+              project.upCount = up;
+              project.downCount = down;
+          });
         };
-        /*
 
-        $scope.upVote = function() {
-            alert("up");
-        }
+        $scope.updateVote = function(score, project){
+            project.userVote.score = score;
+            project.userVote.$update({ voteId: project.userVote._id },function() {
+                if(score==1){
+                    project.upCount++;
+                    project.downCount--;
+                }
+                else{
+                    project.upCount--;
+                    project.downCount++;
+                }
+            }, function(errorResponse) {
+                $scope.error = errorResponse.data.message;
+            });
+        };
 
-        $scope.downVote =function() {
-            alert("down");
-        }
-*/
+        $scope.deleteVote = function(project){
+            var score = project.userVote.score;
+          if(project.userVote){
+              project.userVote.$remove(function() {
+                  project.userHasVoted = false;
+                  project.userVote = null;
+                  if(score==1)project.upCount--;
+                  else project.downCount--;
+              });
+          }
+        };
     }
 ]);
