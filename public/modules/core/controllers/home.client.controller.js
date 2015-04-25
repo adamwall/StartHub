@@ -1,6 +1,5 @@
 'use strict';
 
-
 angular.module('core').controller('HomeController', ['$scope', 'Authentication',
 	function($scope, Authentication) {
 		// This provides Authentication context.
@@ -30,8 +29,8 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
                 colour: 'btn-info',
                 total: '85,000',
                 description: 'EMAILS SENT'
-            },
-
+            }
         ];
 	}
 ]);
+

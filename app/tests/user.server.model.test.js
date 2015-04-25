@@ -22,6 +22,8 @@ describe('User Model Unit Tests:', function() {
 			lastName: 'Name',
 			displayName: 'Full Name',
 			email: 'test@test.com',
+			city: 'Naperville',
+			state: 'Illinois',
 			username: 'username',
 			password: 'password',
 			provider: 'local'
@@ -31,12 +33,60 @@ describe('User Model Unit Tests:', function() {
 			lastName: 'Name',
 			displayName: 'Full Name',
 			email: 'test@test.com',
+			city: 'Addison',
+			state: 'Illinois',
 			username: 'username',
 			password: 'password',
 			provider: 'local'
 		});
 
 		done();
+	});
+
+	describe('User City', function() {
+		it('should show user city in database when user is created with city', function(done) {
+			user.city.should.equal('Naperville');
+			done();
+		});
+
+		it('should not show user state when user created with no location', function(done) {
+			var userObj = new User({
+				firstName: 'Full',
+				lastName: 'Name',
+				displayName: 'Full Name',
+				email: 'test@test.com',
+				city: '',
+				state: 'Illinois',
+				username: 'username',
+				password: 'password',
+				provider: 'local'
+			});
+			userObj.city.should.equal('');
+			done();
+		});
+	});
+
+	describe('User State', function() {
+		it('should show user state in database when user is created with state', function(done) {
+			user.state.should.equal('Illinois');
+			done();
+		});
+
+		it('should not show user state when user created with no state', function(done) {
+			var userObj = new User({
+				firstName: 'Full',
+				lastName: 'Name',
+				displayName: 'Full Name',
+				email: 'test@test.com',
+				city: '',
+				state: '',
+				username: 'username',
+				password: 'password',
+				provider: 'local'
+			});
+			userObj.state.should.equal('');
+			done();
+		});
 	});
 
 	describe('Method Save', function() {
