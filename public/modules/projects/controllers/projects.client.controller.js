@@ -15,7 +15,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
             name: 'imageFilter',
             fn: function (item /*{File|FileLikeObject}*/, options) {
                 var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+                return '|jpg|png|jpeg|bmp|gif|tiff|'.indexOf(type) !== -1;
             }
         });
         uploader.filters.push({
@@ -50,8 +50,8 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 //upload image logo after save(need project id for routing)
                 if(uploader.queue.length>0) {
                     uploader.onBeforeUploadItem = function (item) {
-                        uploader.url = '/projects/img/' + response._id;
-                        item.url = '/projects/img/' + response._id;
+                        uploader.url = '/projects/img/' + response._id +'/logo.jpg';
+                        item.url = '/projects/img/' + response._id +'/logo.jpg';
                     };
                     uploader.uploadItem(uploader.queue[uploader.queue.length - 1]);
                 }
@@ -89,7 +89,15 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
         $scope.update = function() {
             var project = $scope.project;
 
-            project.$update(function() {
+            project.$update(function(response) {
+                //upload image logo after save(need project id for routing)
+                if(uploader.queue.length>0) {
+                    uploader.onBeforeUploadItem = function (item) {
+                        uploader.url = '/projects/img/' + response._id + '/logo.jpg';
+                        item.url = '/projects/img/' + response._id + '/logo.jpg';
+                    };
+                    uploader.uploadItem(uploader.queue[uploader.queue.length - 1]);
+                }
                 $location.path('projects/' + project._id);
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
