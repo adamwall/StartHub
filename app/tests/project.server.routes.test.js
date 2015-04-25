@@ -286,14 +286,14 @@ describe('Project CRUD tests', function() {
                         if (projectSaveErr) done(projectSaveErr);
                         var projectId = projectSaveRes.body._id;
                         //var img = fs.openSync( path.join( __dirname , '/../img/default.jpg') ,'r' );
-                        agent.post('/projects/img/' + projectId + '/logo.jpg')
+                        agent.post('/projects/img/' + projectId + '/' + name)
                             .attach('file', path.join( __dirname , '/../img/default.jpg') )
                             .expect(200)
                             .end(function (imgSaveErr, imgSaveRes) {
                                 console.log('aaaaa');
                                 //if(imgSaveErr) done(imgSaveErr);
                                 //try to get image now
-                                agent.get('/projects/img/' + projectId + '/logo.jpg')
+                                agent.get('/projects/img/' + projectId + '/' + name)
                                     .expect(200)
                                     .end(function() {
                                         done();
@@ -384,6 +384,87 @@ async.each(['travis is great','elephants?','#$%^&is the name of the game'], func
                         });
                 });
         });
+        afterEach(function(done) {
+            User.remove().exec();
+            Project.remove().exec();
+            done();
+        });
+    });
+    callback();
+});
+
+async.each(['logo.jpg','elephants.jpg','rabbits.jpg'], function(name, callback) {
+    describe('Param Test', function() {
+        beforeEach(function (done) {
+            // Create user credentials
+            credentials = {
+                username: 'username',
+                password: 'password'
+            };
+
+            // Create a new user
+            user = new User({
+                firstName: 'Full',
+                lastName: 'Name',
+                displayName: 'Full Name',
+                email: 'test@test.com',
+                username: credentials.username,
+                password: credentials.password,
+                provider: 'local'
+            });
+
+            // Save a user to the test db and create new Project
+            user.save(function () {
+                project = {
+                    title: 'project',
+                    description: 'desc',
+                    industry: 'test ind',
+                    referred: '',
+                    created: Date.now(),
+                    user: user._id
+                };
+
+                done();
+            });
+        });
+
+        it('should be able to save '+ name +' and get '+ name +' after creating project', function(done) {
+            this.timeout(5000);
+            agent.post('/auth/signin')
+                .send(credentials)
+                .expect(200)
+                .end(function (signinErr, signinRes) {
+                    // Handle signin error
+                    if (signinErr) done(signinErr);
+                    // Get the userId
+                    var userId = user.id;
+
+                    // Save a new Project
+                    agent.post('/projects')
+                        .send(project)
+                        .expect(200)
+                        .end(function (projectSaveErr, projectSaveRes) {
+                            // Handle Project save error
+                            if (projectSaveErr) done(projectSaveErr);
+                            var projectId = projectSaveRes.body._id;
+                            //var img = fs.openSync( path.join( __dirname , '/../img/default.jpg') ,'r' );
+                            agent.post('/projects/img/' + projectId + '/logo.jpg')
+                                .attach('file', path.join( __dirname , '/../img/default.jpg') )
+                                .expect(200)
+                                .end(function (imgSaveErr, imgSaveRes) {
+                                    console.log('aaaaa');
+                                    //if(imgSaveErr) done(imgSaveErr);
+                                    //try to get image now
+                                    agent.get('/projects/img/' + projectId + '/logo.jpg')
+                                        .expect(200)
+                                        .end(function() {
+                                            done();
+                                        });
+                                });
+                        });
+                });
+        });
+
         afterEach(function(done) {
             User.remove().exec();
             Project.remove().exec();
