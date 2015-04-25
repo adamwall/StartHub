@@ -49,8 +49,8 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 //upload image logo after save(need project id for routing)
                 if(uploader.queue.length>0) {
                     uploader.onBeforeUploadItem = function (item) {
-                        uploader.url = '/projects/img/' + response._id;
-                        item.url = '/projects/img/' + response._id;
+                        uploader.url = '/projects/img/' + response._id +'/logo.jpg';
+                        item.url = '/projects/img/' + response._id +'/logo.jpg';
                     };
                     uploader.uploadItem(uploader.queue[uploader.queue.length - 1]);
                 }
@@ -91,8 +91,8 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 //upload image logo after save(need project id for routing)
                 if(uploader.queue.length>0) {
                     uploader.onBeforeUploadItem = function (item) {
-                        uploader.url = '/projects/img/' + response._id;
-                        item.url = '/projects/img/' + response._id;
+                        uploader.url = '/projects/img/' + response._id + '/logo.jpg';
+                        item.url = '/projects/img/' + response._id + '/logo.jpg';
                     };
                     uploader.uploadItem(uploader.queue[uploader.queue.length - 1]);
                 }
