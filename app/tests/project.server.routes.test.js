@@ -286,14 +286,14 @@ describe('Project CRUD tests', function() {
                         if (projectSaveErr) done(projectSaveErr);
                         var projectId = projectSaveRes.body._id;
                         //var img = fs.openSync( path.join( __dirname , '/../img/default.jpg') ,'r' );
-                        agent.post('/projects/img/' + projectId)
+                        agent.post('/projects/img/' + projectId + '/logo.jpg')
                             .attach('file', path.join( __dirname , '/../img/default.jpg') )
                             .expect(200)
                             .end(function (imgSaveErr, imgSaveRes) {
                                 console.log('aaaaa');
                                 //if(imgSaveErr) done(imgSaveErr);
                                 //try to get image now
-                                agent.get('/projects/img/' + projectId)
+                                agent.get('/projects/img/' + projectId + '/logo.jpg')
                                     .expect(200)
                                     .end(function() {
                                         done();
