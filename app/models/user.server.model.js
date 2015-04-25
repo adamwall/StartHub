@@ -64,6 +64,16 @@ var UserSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	city: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	state: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	salt: {
 		type: String
 	},
