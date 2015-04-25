@@ -23,6 +23,8 @@ describe('Project Model Unit Tests:', function() {
 			lastName: 'Name',
 			displayName: 'Full Name',
 			email: 'test@test.com',
+			city: 'city',
+			state: 'state',
 			username: 'username',
 			password: 'password'
 		});
@@ -35,6 +37,7 @@ describe('Project Model Unit Tests:', function() {
                 referred: '',
                 created: Date.now(),
 				tags: 'tags',
+				location: 'location',
                 user: user
 			});
 
