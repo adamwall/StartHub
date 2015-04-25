@@ -27,12 +27,12 @@ exports.create = function(req, res) {
 };
 
 exports.hasVoted = function(req, res, next) {
-	console.log('middlewear');
+	//console.log('middlewear');
 	var vote = new Vote(req.body);
 	vote.userid = req.user._id;
 	Vote.find({projectid: vote.projectid, userid: vote.userid}, function (err, docs) {
-		console.log(docs);
-		console.log(docs.length);
+		//console.log(docs);
+		//console.log(docs.length);
 		if (docs.length) {
 			/*return res.status(400).send({
 			 message: 'Vote already exists'*/
