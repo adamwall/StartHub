@@ -114,7 +114,10 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 'score': param
             });
             vote.$save(function(respone) {
-                $scope.getVotes(project);
+                if(param==1)project.upCount++;
+                else project.downCount++;
+                project.userVote = vote;
+                project.userHasVoted=true;
             }, function(errorMessage){
                 alert(errorMessage.data.message);
             });
@@ -144,17 +147,27 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
         $scope.updateVote = function(score, project){
             project.userVote.score = score;
             project.userVote.$update({ voteId: project.userVote._id },function() {
-                console.log('updated');
-                $scope.getVotes(project);
+                if(score==1){
+                    project.upCount++;
+                    project.downCount--;
+                }
+                else{
+                    project.upCount--;
+                    project.downCount++;
+                }
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
         };
 
         $scope.deleteVote = function(project){
+            var score = project.userVote.score;
           if(project.userVote){
               project.userVote.$remove(function() {
-                  $scope.getVotes(project);
+                  project.userHasVoted = false;
+                  project.userVote = null;
+                  if(score==1)project.upCount--;
+                  else project.downCount--;
               });
           }
         };
