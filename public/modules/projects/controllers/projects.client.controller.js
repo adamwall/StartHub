@@ -55,16 +55,18 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                     uploader.uploadItem(uploader.queue[uploader.queue.length - 1]);
                 }
                 $location.path('projects/' + response._id);
-
-                // Clear form fields
-                $scope.title = '';
-                $scope.description = '';
-                $scope.industry = '';
-                $scope.referred = '';
+                $scope.clear_fields(project)
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
         };
+             $scope.clear_fields = function(project)
+             {
+                 $scope.title = '';
+                 $scope.description = '';
+                 $scope.industry = '';
+                 $scope.referred = '';
+             };
 
         // Remove existing Project
         $scope.remove = function(project) {
