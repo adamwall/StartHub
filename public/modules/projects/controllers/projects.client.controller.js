@@ -41,7 +41,8 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 description: this.description,
                 industry: this.industry,
                 referred: this.referred,
-                tags: this.tags
+                tags: this.tags,
+                location: this.location
             });
 
             // Redirect after save
@@ -61,6 +62,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 $scope.description = '';
                 $scope.industry = '';
                 $scope.referred = '';
+                $scope.location = '';
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });

@@ -87,9 +87,10 @@
 				<p><span data-ng-bind="project.description"></span></p>
 				<h3>Target Industry:</h3>
 				<p><span data-ng-bind="project.industry"></span></p>
+                <h3>Location</h3>
+                <p><span data-ng-bind="project.location"></span></p>
                 <h3>Tags</h3>
                 <div id="tags">
-
                     <span class="tag" ng-repeat="item in project.tags.split(' ')">{{item}}</span>
                 </div>
 			</div>
