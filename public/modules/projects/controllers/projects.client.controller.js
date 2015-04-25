@@ -15,7 +15,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
             name: 'imageFilter',
             fn: function (item /*{File|FileLikeObject}*/, options) {
                 var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+                return '|jpg|png|jpeg|bmp|gif|tiff|'.indexOf(type) !== -1;
             }
         });
         uploader.filters.push({
@@ -25,7 +25,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
             }
         });
         uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-            $scope.error_img = 'There was a problem with your image, make sure it is the right type(jpg, jpeg, png, bmp, gif)' +
+            $scope.error_img = 'There was a problem with your image, make sure it is the right type(jpg, jpeg, png, bmp, gif, tiff)' +
             ' or that it is less than 1MB';
         };
         uploader.onAfterAddingFile = function (fileItem) {
@@ -111,14 +111,6 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
 			});
 		};
 
-        //Votes =============
-        /*
-        $scope.changeVote = function(vote, flag) {
-            $scope.vote = vote == flag ? 'None' : flag;
-            alert($scope.vote);
-        };
-        */
-
         $scope.vote = function(param) {
             if (param === 1 ) {
                 alert('up');
@@ -127,15 +119,6 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 alert('down');
             }
         };
-        /*
 
-        $scope.upVote = function() {
-            alert("up");
-        }
-
-        $scope.downVote =function() {
-            alert("down");
-        }
-*/
     }
 ]);
