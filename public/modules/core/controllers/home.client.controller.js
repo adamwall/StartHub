@@ -1,36 +1,29 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication',
-	function($scope, Authentication) {
+angular.module('core').controller('HomeController', ['$scope', 'Authentication', '$http',
+	function($scope, Authentication, $http) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 
-        $scope.alerts = [
-            {
-                icon: 'glyphicon-user',
-                colour:'btn-success',
-                total: '20,408',
-                description: 'TOTAL USERS'
-            },
-            {
+        $http.get('projects/').success(function(result){
+            $scope.alerts.push({
                 icon: 'glyphicon-folder-open',
                 colour: 'btn-primary',
-                total: '8,382',
+                total: result.length,
                 description: 'TOTAL PROJECTS'
-            },
+            });
+            console.log(result.length);
+        });
+
+        $scope.alerts = [
             {
                 icon: 'glyphicon-asterisk',
-                colour: 'btn-warning',
-                total: '527',
-                description: 'NEW PROJECTS IN 24H'
+                colour:'btn-success',
+                total: '1',
+                description: 'AMAZING WEBSITES CALLED STARTHUB'
             },
-            {
-                icon: 'glyphicon-record',
-                colour: 'btn-info',
-                total: '85,000',
-                description: 'EMAILS SENT'
-            },
+
 
         ];
 	}
