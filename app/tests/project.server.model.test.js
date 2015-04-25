@@ -35,6 +35,7 @@ describe('Project Model Unit Tests:', function() {
                 referred: '',
                 created: Date.now(),
 				tags: 'tags',
+                location: 'location',
                 user: user
 			});
 
@@ -59,6 +60,28 @@ describe('Project Model Unit Tests:', function() {
 			});
 		});
 	});
+
+    describe(' Project Location', function() {
+        it('should show location in view project page when project is created with location', function(done) {
+            project.location.should.equal('location');
+            done();
+        });
+
+        it('should not show location when project created with no location', function(done) {
+            var projectObj = new Project({
+                title: 'test project',
+                description: 'desc',
+                industry: 'test ind',
+                referred: '',
+                created: Date.now(),
+                tags: 'tags',
+                location: '',
+                user: user
+            });
+            projectObj.location.should.equal('');
+            done();
+        });
+    });
 
 	describe('Create Tags', function() {
 		it('should show tag when project created with one tags', function(done) {
