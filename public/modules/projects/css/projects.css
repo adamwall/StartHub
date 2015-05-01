@@ -16,6 +16,7 @@
 
 .list-group {
 	font-size: medium;
+	margin-bottom: 50px;
 }
 
 #project-title {
@@ -48,9 +49,4 @@ hr {
 
 .down{
 	color: red;
-}
-
-.list-group {
-	float:left;
-	margin-bottom: 50px;
 }

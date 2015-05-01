@@ -91,7 +91,7 @@
                 <p><span data-ng-bind="project.location"></span></p>
                 <h3>Tags</h3>
                 <div id="tags">
-                    <span class="tag" ng-repeat="item in project.tags.split(' ')">{{item}}</span>
+                    <span class="tag" ng-repeat="item in project.tags.split(' ') track by $index">{{item}}</span>
                 </div>
 			</div>
 		</em>
