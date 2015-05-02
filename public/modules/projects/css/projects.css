@@ -43,10 +43,10 @@ hr {
 	font-size: medium;
 }
 
-.up{
-	color: green;
+.comment-author {
+	font-size: xx-small;
 }
 
-.down{
-	color: red;
+.comment-body{
+	font-size: medium;
 }
