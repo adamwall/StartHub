@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    <section data-ng-controller="ProjectsController" data-ng-init="find()">
+    <section ng-if="authentication.user.interests" data-ng-controller="ProjectsController" data-ng-init="find()">
         <div class="page-header">
             <h1>Recommended Projects</h1>
         </div>
