@@ -15,11 +15,11 @@ var _ = require('lodash'),
  */
 exports.sendMessage = function(req, res) {
     var message = new Messages(req.body);
+    message.userFrom = req.user.username;
 
     //check if the user the message is sent to exists
-    if(message.userFrom){
         User.find({username : message.userTo}, function (err, docs) {
-            if (docs.length){
+            if (docs.length == 1){
                 //the user exists
                 message.save(function (err) {
                     if (err) {
@@ -28,7 +28,7 @@ exports.sendMessage = function(req, res) {
                         });
                     }
                     else {
-                        res.json(message);
+                        res.jsonp(message);
                     }
                 });
             }else{
@@ -37,12 +37,6 @@ exports.sendMessage = function(req, res) {
                 });
             }
         });
-    }
-    else{
-        res.status(401).send({
-            message: 'Not logged in'
-        });
-    }
 };
 
 /**
@@ -70,14 +64,8 @@ exports.delete = function(req, res) {
  * Get a list of Messages
  */
 exports.getMessageList = function(req, res) {
-    if(req.user !== undefined) {
-        Messages.find({ $query: {userTo: req.user.username}, $orderby: { dateSent : -1 } }, function (err, results) {
+    var user = req.user;
+    Messages.find({ $query: {userTo: user.username}, $orderby: { dateSent : -1 } }, function (err, results) {
             res.json(results);
-        });
-    }
-    else {
-        return res.status(400).send({
-            message: 'You must be logged in to view inbox.'
-        });
-    }
+    });
 };

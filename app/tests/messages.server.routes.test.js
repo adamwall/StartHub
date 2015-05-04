@@ -96,7 +96,6 @@ describe('Message Route tests', function() {
     });
 
     it('should not be able to save Message instance if not logged in', function(done) {
-        messages.userFrom = '';
         agent.post('/messages')
             .send(messages)
             .expect(401)
@@ -107,13 +106,21 @@ describe('Message Route tests', function() {
     });
 
     it('should not be able to save Message instance if userTo does not exist', function(done) {
-        messages.userTo = '';
-        agent.post('/messages')
-            .send(messages)
-            .expect(400)
-            .end(function(messagesSaveErr, messagesSaveRes) {
-                // Call the assertion callback
-                done(messagesSaveErr);
+        agent.post('/auth/signin')
+            .send(credentials)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+                // Get the userId
+                messages.userTo = '';
+                agent.post('/messages')
+                    .send(messages)
+                    .expect(400)
+                    .end(function (messagesSaveErr, messagesSaveRes) {
+                        // Call the assertion callback
+                        done(messagesSaveErr);
+                    });
             });
     });
 
@@ -153,14 +160,19 @@ describe('Message Route tests', function() {
         // Save the Comment
         messagesObj.save(function() {
             // Request messages
-            request(app).get('/messages').expect(400).end(function(req, res) {
+            request(app).get('/messages').expect(401).end(function(req, res) {
                     // Set assertion
-                    res.body.should.be.an.Object.with.property('message','You must be logged in to view inbox.');
+                    res.body.should.be.an.Object.with.property('message','User is not logged in');
 
                     // Call the assertion callback
                     done();
                 });
 
         });
+    });
+
+    afterEach(function(done) {
+        User.remove().exec();
+        done();
     });
 });
