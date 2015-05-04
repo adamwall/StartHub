@@ -7,4 +7,7 @@ module.exports = function(app) {
     //Setting up the messaging system
     app.route('/messages/').post(users.requiresLogin ,messages.sendMessage);
     app.route('/messages/').get(users.requiresLogin ,messages.getMessageList);
+    app.route('/messages/:messageId').get(users.requiresLogin, messages.read);
+
+    app.param('messageId', messages.messageByID);
 };

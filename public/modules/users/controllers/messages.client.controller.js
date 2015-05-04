@@ -38,6 +38,36 @@ angular.module('users').controller('MessagesController', ['$scope', '$http', '$l
                 $scope.errorMessage = errorResponse.data.message;
             });
         };
+
+        //gets a single message
+        $scope.getMessage = function() {
+            $scope.message = Messages.get({
+                    messageId: $stateParams.messageId
+            }, function(response){
+                $scope.replyUserTo = response.userFrom;
+                $scope.replyMessageSubject = 're: ' + response.messageSubject;
+            });
+        };
+
+        //sends a message
+        $scope.reply = function() {
+            var message = new Messages({
+                userTo: this.replyUserTo,
+                messageSubject: this.replyMessageSubject,
+                messageBody: this.replyMessageBody
+            });
+            message.$save(function(response) {
+                $scope.successMessage=true;
+                $scope.isCollapsed=false;
+                $scope.errorMessage = null;
+                $scope.userTo='';
+                $scope.messageBody='';
+                $scope.messageSubject='';
+            }, function(errorResponse) {
+                $scope.successMessage=false;
+                $scope.errorMessage = errorResponse.data.message;
+            });
+        };
 	}
 ]);
 

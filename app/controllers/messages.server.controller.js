@@ -43,7 +43,7 @@ exports.sendMessage = function(req, res) {
  * Show the current Message
  */
 exports.read = function(req, res) {
-
+    res.jsonp(req.message);
 };
 
 /**
@@ -67,5 +67,14 @@ exports.getMessageList = function(req, res) {
     var user = req.user;
     Messages.find({ $query: {userTo: user.username}, $orderby: { dateSent : -1 } }, function (err, results) {
             res.json(results);
+    });
+};
+
+exports.messageByID = function(req, res, next, id) {
+    Messages.findById(id).exec(function(err, message) {
+        if (err) return next(err);
+        if (! message) return next(new Error('Failed to load Message ' + id));
+        req.message = message ;
+        next();
     });
 };

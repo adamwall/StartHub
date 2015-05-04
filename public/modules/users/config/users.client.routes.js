@@ -13,6 +13,10 @@ angular.module('users').config(['$stateProvider',
             url: '/messages/inbox',
             templateUrl: 'modules/users/views/messaging/inbox.client.view.html'
         }).
+        state('messageView', {
+            url: '/messages/inbox/:messageId',
+            templateUrl: 'modules/users/views/messaging/view-single.client.view.html'
+        }).
 		state('profile', {
 			url: '/settings/profile',
 			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
