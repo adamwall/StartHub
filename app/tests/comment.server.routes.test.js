@@ -123,7 +123,6 @@ describe('Comment Route tests', function() {
     });
 
     it('should give an error if trying to comment while not logged in', function(done) {
-        comment.author=undefined;
         agent.post('/projects/' + comment.projectid + '/comment')
             .send(comment)
             .expect(401)
@@ -133,24 +132,18 @@ describe('Comment Route tests', function() {
             });
     });
 
-    it('should be able to delete a comment if logged in', function(done) {
+    it('should be able to delete comment instance if signed in', function(done) {
         agent.post('/auth/signin')
             .send(credentials)
             .expect(200)
             .end(function(signinErr, signinRes) {
                 // Handle signin error
                 if (signinErr) done(signinErr);
+
                 // Get the userId
-                var author = user.username;
-                var projectObj = new Project({
-                    title: 'Project Name2',
-                    description: 'desc2',
-                    industry: 'test ind2',
-                    referred: '',
-                    created: Date.now(),
-                    user: user._id
-                });
-                projectObj.save();
+                var userId = user.id;
+
+                var projectObj = new Project(project);
 
                 // Save a new comment
                 agent.post('/projects/' + projectObj._id + '/comment')
@@ -159,24 +152,25 @@ describe('Comment Route tests', function() {
                     .end(function (commentSaveErr, commentSaveRes) {
                         // Handle comment save error
                         if (commentSaveErr) done(commentSaveErr);
-
-                        //delete the comment
-                        agent.put('/projects/' + projectObj._id + '/comment')
+                        //delete comment
+                        agent.delete('/projects/' + projectObj._id + '/comment/' + commentSaveRes.body._id)
                             .send(comment)
                             .expect(200)
-                            .end(function (commentDelErr, commentDelRes) {
-                                if(commentDelErr) done(commentDelErr);
+                            .end(function(commentDeleteErr, commentDeleteRes) {
+                                if(commentDeleteErr) done(commentDeleteErr);
 
-                                agent.get('/projects/' + projectObj._id + '/comment')
-                                    .end(function(req, res) {
-                                        // Set assertion
-                                        res.body.should.be.an.Array.with.lengthOf(0);
+                                // Set assertions
+                                (commentDeleteRes.body._id).should.equal(commentSaveRes.body._id);
 
-                                        // Call the assertion callback
-                                        done();
-                                    });
+                                done();
                             });
                     });
             });
+    });
+
+    afterEach(function(done) {
+        User.remove().exec();
+        Project.remove().exec();
+        done();
     });
 });

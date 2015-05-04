@@ -13,11 +13,8 @@ var _ = require('lodash'),
  * Create a Comment
  */
 exports.create = function(req, res) {
-    console.log('comment create');
     var comment = new Comment(req.body);
     comment.author = req.user.username;
-    console.log(comment);
-
         comment.save(function (err) {
             if (err) {
                 return res.status(400).send({
