@@ -380,7 +380,7 @@ async.each(['healthcare','food','education'], function(industry, callback) {
 			// Save a user to the test db and create new Project
 			user.save(function () {
 				project = {
-					title: "test name",
+					title: 'test name',
 					description: 'desc',
 					industry: industry,
 					tags: 'tags',

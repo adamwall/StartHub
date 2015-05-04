@@ -19,7 +19,7 @@ exports.sendMessage = function(req, res) {
 
     //check if the user the message is sent to exists
         User.find({username : message.userTo}, function (err, docs) {
-            if (docs.length == 1){
+            if (docs.length === 1){
                 //the user exists
                 message.save(function (err) {
                     if (err) {

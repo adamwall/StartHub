@@ -123,7 +123,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
                 'score': param
             });
             vote.$save(function(respone) {
-                if(param==1)project.upCount++;
+                if(param===1)project.upCount++;
                 else project.downCount++;
                 project.userVote = vote;
                 project.userHasVoted=true;
@@ -141,11 +141,11 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
               var up = 0;
               var down = 0;
               angular.forEach(votes, function(vote){
-                  if(vote.userid == ''+user._id){
+                  if(vote.userid === ''+user._id){
                       project.userHasVoted=true;
                       project.userVote = vote;
                   }
-                  if(vote.score==1) up++;
+                  if(vote.score===1) up++;
                   else down++;
               });
               project.upCount = up;
@@ -156,7 +156,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
         $scope.updateVote = function(score, project){
             project.userVote.score = score;
             project.userVote.$update({ voteId: project.userVote._id },function() {
-                if(score==1){
+                if(score===1){
                     project.upCount++;
                     project.downCount--;
                 }
@@ -175,7 +175,7 @@ projectsApp.controller('ProjectsController', ['$scope', '$stateParams', '$locati
               project.userVote.$remove(function() {
                   project.userHasVoted = false;
                   project.userVote = null;
-                  if(score==1)project.upCount--;
+                  if(score===1)project.upCount--;
                   else project.downCount--;
               });
           }
