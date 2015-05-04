@@ -25,9 +25,11 @@ module.exports = function(app) {
         .delete(users.requiresLogin, projects.hasAuthorization, projects.delete);
 
     app.route('/projects/:projectId/comment')
-        .post(comment.create)
-        .get(comment.list)
-        .put(comment.delete);
+        .post(users.requiresLogin, comment.create)
+        .get(comment.list);
+
+    app.route('/projects/:projectId/comment/:commentId')
+        .delete(comment.delete);
 
     app.route('/projects/:projectId/votes')
         .post(users.requiresLogin, votes.hasVoted, votes.create)
@@ -37,6 +39,7 @@ module.exports = function(app) {
         .put(users.requiresLogin, votes.update)
         .delete(users.requiresLogin, votes.delete);
 
+    app.param('commentId', comment.commentByID);
     app.param('voteId', votes.voteByID);
     // Finish by binding the Project middleware
     app.param('projectId', projects.projectByID);

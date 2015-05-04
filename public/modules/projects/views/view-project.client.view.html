@@ -111,11 +111,7 @@
         <form role="form" name="commentForm" data-ng-submit="sendComment()">
             <div class="form-group">
                 <label for="message">Add Comments:</label>
-                <textarea class="form-control" rows="5" id="message" data-ng-model= "comment.message"></textarea>
-                <script>
-                    console.log('a');
-                    console.log(project._id);
-                </script>
+                <textarea class="form-control" rows="5" id="message" data-ng-model="message"></textarea>
             </div>
             <div class="text-right form-group">
                 <button type="submit" class="btn btn-success">Add Comment</button>

@@ -17,7 +17,7 @@ var CommentSchema = new Schema({
     },
     message: {
         type: String,
-        require: 'comments required',
+        required: 'comments required',
         trim: true
     },
     author: {
