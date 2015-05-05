@@ -119,11 +119,11 @@ exports.saveImg = function(req, res){
         }
     };
 
-    console.log(req.files.file.path);
+    console.log(req.file_name);
     var projectId = req.project._id;
     var img_dir = path.join(__dirname, '../img/' + projectId + '/');
     mkdirSync(img_dir);
-    var img_path = path.join(img_dir, 'logo.jpg');
+    var img_path = path.join(img_dir, req.fileName);
     fs.rename(req.files.file.path, img_path, function(err){
         if(err){
             console.log('ERROr ' + err);
@@ -138,10 +138,12 @@ exports.saveImg = function(req, res){
 
 exports.getImg =  function(req, res){
     var projectId = req.project._id;
-    fs.exists(path.join(__dirname, '../img/' + projectId + '/logo.jpg'), function(exists){
+    console.log(req.fileName);
+    console.log(projectId);
+    fs.exists(path.join(__dirname, '../img/' + projectId + '/'+ req.fileName), function(exists){
         if(exists){
             res.statusCode= 200;
-            res.sendFile(path.join(__dirname, '../img/' + projectId + '/logo.jpg'));
+            res.sendFile(path.join(__dirname, '../img/' + projectId + '/'+ req.fileName));
         }
         else{
             //we want the default logo
@@ -151,4 +153,8 @@ exports.getImg =  function(req, res){
     });
 };
 
-
+/* Image name middleware*/
+exports.getFileName = function(req, res, next, fileName) {
+    req.fileName = fileName;
+    next();
+};

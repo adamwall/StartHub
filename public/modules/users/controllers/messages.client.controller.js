@@ -1,10 +1,8 @@
 'use strict';
 
-angular.module('users').controller('MessagesController', ['$scope', '$http', '$location', 'Authentication', '$modal',
-	function($scope, $http, $location, Authentication, $modal) {
-        $scope.authentication = Authentication;
-        var user = $scope.authentication.user.username;
-
+angular.module('users').controller('MessagesController', ['$scope', '$http', '$location', 'Authentication', '$modal', 'Messages', '$stateParams',
+	function($scope, $http, $location, Authentication, $modal, Messages, $stateParams) {
+        //opens the modal on project page
         $scope.open = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
@@ -17,46 +15,64 @@ angular.module('users').controller('MessagesController', ['$scope', '$http', '$l
             });
         };
 
-
-
+        //gets a list of messages for the logged in user
         $scope.getMessageList = function() {
-            $http({
-                url: '/messages',
-                method: 'GET',
-                params: user
-            }).success(function(results) {
-                $scope.messages = results;
-            }).error(function (response) {
-                $scope.errorMessage = response.message;
+            $scope.messages = Messages.query();
+        };
+
+        //sends a message
+        $scope.sendMessage = function() {
+            var message = new Messages({
+                userTo: this.userTo,
+                messageSubject: this.messageSubject,
+                messageBody: this.messageBody
+            });
+            message.$save(function(response) {
+                $scope.successMessage=true;
+                $scope.errorMessage = null;
+                $scope.userTo='';
+                $scope.messageBody='';
+                $scope.messageSubject='';
+            }, function(errorResponse) {
+                $scope.successMessage=false;
+                $scope.errorMessage = errorResponse.data.message;
             });
         };
 
-        $scope.sendMessage = function() {
-            $scope.successMessage=null;
-            if($scope.authentication.user){
-                $scope.message.userFrom = $scope.authentication.user.username;
-                $http.post('/messages/', $scope.message).success(function() {
-                    $scope.errorMessage=null;
-                    $scope.message.userTo='';
-                    $scope.message.messageBody='';
-                    $scope.message.messageSubject='';
-                    $scope.successMessage=true;
-                }).error(function(response) {
-                    $scope.errorMessage = response.message;
-                });
-            }
-            else{
-                $scope.errorMessage = 'You must be logged in to send a message.';
-            }
+        //gets a single message
+        $scope.getMessage = function() {
+            $scope.message = Messages.get({
+                    messageId: $stateParams.messageId
+            }, function(response){
+                $scope.replyUserTo = response.userFrom;
+                $scope.replyMessageSubject = 're: ' + response.messageSubject;
+            });
         };
 
+        //sends a message
+        $scope.reply = function() {
+            var message = new Messages({
+                userTo: this.replyUserTo,
+                messageSubject: this.replyMessageSubject,
+                messageBody: this.replyMessageBody
+            });
+            message.$save(function(response) {
+                $scope.successMessage=true;
+                $scope.isCollapsed=false;
+                $scope.errorMessage = null;
+                $scope.userTo='';
+                $scope.messageBody='';
+                $scope.messageSubject='';
+            }, function(errorResponse) {
+                $scope.successMessage=false;
+                $scope.errorMessage = errorResponse.data.message;
+            });
+        };
 	}
 ]);
 
 
-angular.module('users').controller('ModalInstanceCtrl', function ($scope, $modalInstance, proj, Authentication, $http) {
-
-    $scope.authentication = Authentication;
+angular.module('users').controller('ModalInstanceCtrl', function ($scope, $modalInstance, proj, Authentication, Messages) {
 
     $scope.ok = function () {
         $modalInstance.close($scope.selected.item);
@@ -66,14 +82,20 @@ angular.module('users').controller('ModalInstanceCtrl', function ($scope, $modal
         $modalInstance.dismiss('cancel');
     };
 
+    //modal version of sendMessage
     $scope.contactOwner = function() {
-        $scope.message.userFrom = $scope.authentication.user.username;
-        $scope.message.userTo = proj.user.username;
-        $http.post('/messages/', $scope.message).success(function() {
-            $scope.errorMessage=null;
-            $modalInstance.close();
-        }).error(function(response) {
-            $scope.errorMessage = response.message;
+            var message = new Messages({
+                userTo: proj.user.username,
+                messageSubject: this.messageSubject,
+                messageBody: this.messageBody
+            });
+            message.$save(function(response) {
+                $scope.errorMessage=null;
+                $modalInstance.close();
+                $scope.messageBody='';
+                $scope.messageSubject='';
+            }, function(errorResponse) {
+                $scope.errorMessage = errorResponse.data.message;
             });
     };
 });

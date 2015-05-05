@@ -2,8 +2,12 @@
 
 module.exports = function(app) {
     var messages = require('../../app/controllers/messages.server.controller');
+    var users = require('../../app/controllers/users.server.controller');
 
     //Setting up the messaging system
-    app.route('/messages/').post(messages.sendMessage);
-    app.route('/messages/').get(messages.getMessageList);
+    app.route('/messages/').post(users.requiresLogin ,messages.sendMessage);
+    app.route('/messages/').get(users.requiresLogin ,messages.getMessageList);
+    app.route('/messages/:messageId').get(users.requiresLogin, messages.read);
+
+    app.param('messageId', messages.messageByID);
 };

@@ -29,9 +29,11 @@ describe('Vote Model Unit Tests:', function() {
 
 		user.save(function() { 
 			vote = new Vote({
-				// Add model fields
-				// ...
+				projectid: '11111111111',
+				userid: user._id,
+				score: 1
 			});
+
 
 			done();
 		});
@@ -41,6 +43,15 @@ describe('Vote Model Unit Tests:', function() {
 		it('should be able to save without problems', function(done) {
 			return vote.save(function(err) {
 				should.not.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error when try to save without userid', function(done) {
+			vote.userid = '';
+
+			return vote.save(function(err) {
+				should.exist(err);
 				done();
 			});
 		});

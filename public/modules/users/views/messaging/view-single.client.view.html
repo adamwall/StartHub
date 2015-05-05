@@ -1,0 +1,58 @@
+<section data-ng-controller="MessagesController" ng-init="getMessage()">
+    <h3>Message View</h3>
+    <a href="/#!/messages/inbox">back to inbox</a>
+
+    <div data-ng-show="successMessage" class="alert alert-success" role="alert">
+        <strong>Message Sent.</strong>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span ng-bind="message.messageSubject"></span> from <span ng-bind="message.userFrom"></span>
+        </div>
+        <div class="panel-body">
+            <span ng-bind="message.messageBody"></span><br>
+            <span ng-bind="message.dateSent | date: 'medium' " style="font-size:xx-small"></span>
+        </div>
+        <div class="panel-footer">
+            <button class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">reply</button>
+        </div>
+    </div>
+    <div collapse="!isCollapsed">
+        <div data-ng-show="errorMessage" class="text-center text-danger">
+            <div class="alert alert-danger" role="alert">
+                <strong data-ng-bind="errorMessage"></strong>
+            </div>
+        </div>
+        <form role="form" name="messageForm" data-ng-submit="reply()">
+            <fieldset>
+                <div class="form-group">
+                    <span class="input-group"></span>
+                    <input type="hidden" required id="replyUserTo" name="replyUserTo" class="form-control" ng-model="replyUserTo">
+                </div>
+                <div class="form-group">
+                    <label for="replyMessageSubject">Message Subject: </label>
+                    <input type="text" required id="replyMessageSubject" name="replyMessageSubject" class="form-control" data-ng-model="replyMessageSubject">
+                </div>
+                <div class="form-group">
+                    <label for="replyMessageBody">Message Body:</label>
+                    <textarea required class="form-control" rows="5" id="replyMessageBody" data-ng-model="replyMessageBody"></textarea>
+                </div>
+                <div class="text-center form-group">
+                    <button type="submit" class="btn btn-lg btn-success btn-block">Send Message</button>
+                </div>
+                <div data-ng-show="successMessage" class="text-center text-success">
+                    <strong>Message Sent</strong>
+                </div>
+
+                <div data-ng-show="errorMessage" class="text-center text-danger">
+                    <div class="alert alert-danger" role="alert">
+                        <strong data-ng-bind="errorMessage"></strong>
+                    </div>
+
+                </div>
+            </fieldset>
+
+        </form>
+    </div>
+</section>

@@ -16,6 +16,7 @@
 
 .list-group {
 	font-size: medium;
+	margin-bottom: 50px;
 }
 
 #project-title {
@@ -42,16 +43,10 @@ hr {
 	font-size: medium;
 }
 
-.up{
-	color: green;
+.comment-author {
+	font-size: xx-small;
 }
 
-.down{
-	color: red;
+.comment-body{
+	font-size: medium;
 }
-
-.list-group {
-	float:left;
-	margin-bottom: 50px;
-}
-

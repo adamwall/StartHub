@@ -40,11 +40,10 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		</a>
 	</div>
-
 	<small>
 		<em class="text-muted">
 			<div class="header">
-                <img ng-src="/projects/img/{{project._id}}" width="300" height="100"/>
+                <h4><br><br><br><img ng-src="/projects/img/{{project._id}}/logo.jpg" width="300" height="100"/></h4>
 				<h1>
 					<span data-ng-bind="project.title"></span>
 				</h1>
@@ -60,11 +59,11 @@
                         <form role="form" name="messageForm" data-ng-submit="contactOwner()">
                             <div class="form-group">
                                 <label for="messageSubject">Message Subject: </label>
-                                <input type="text" required id="messageSubject" name="messageSubject" class="form-control" data-ng-model="message.messageSubject">
+                                <input type="text" required id="messageSubject" name="messageSubject" class="form-control" data-ng-model="messageSubject">
                             </div>
                             <div class="form-group">
                                 <label for="messageBody">Message Body:</label>
-                                <textarea class="form-control" rows="5" id="messageBody" data-ng-model="message.messageBody"></textarea>
+                                <textarea class="form-control" rows="5" id="messageBody" data-ng-model="messageBody"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary" >Send</button>
                         </form>
@@ -87,10 +86,11 @@
 				<p><span data-ng-bind="project.description"></span></p>
 				<h3>Target Industry:</h3>
 				<p><span data-ng-bind="project.industry"></span></p>
+                <h3>Location</h3>
+                <p><span data-ng-bind="project.location"></span></p>
                 <h3>Tags</h3>
                 <div id="tags">
-
-                    <span class="tag" ng-repeat="item in project.tags.split(' ')">{{item}}</span>
+                    <span class="tag" ng-repeat="item in project.tags.split(' ') track by $index">{{item}}</span>
                 </div>
 			</div>
 		</em>
@@ -111,11 +111,7 @@
         <form role="form" name="commentForm" data-ng-submit="sendComment()">
             <div class="form-group">
                 <label for="message">Add Comments:</label>
-                <textarea class="form-control" rows="5" id="message" data-ng-model= "comment.message"></textarea>
-                <script>
-                    console.log('a');
-                    console.log(project._id);
-                </script>
+                <textarea class="form-control" rows="5" id="message" data-ng-model="message"></textarea>
             </div>
             <div class="text-right form-group">
                 <button type="submit" class="btn btn-success">Add Comment</button>

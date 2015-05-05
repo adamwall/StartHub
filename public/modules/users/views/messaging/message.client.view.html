@@ -6,15 +6,15 @@
             <div class="form-group">
                 <span class="input-group"></span>
                 <label for="userTo">To: </label>
-                <input type="text" required id="userTo" name="userTo" class="form-control" data-ng-model="message.userTo" placeholder="username">
+                <input type="text" required id="userTo" name="userTo" class="form-control" data-ng-model="userTo" placeholder="username">
             </div>
             <div class="form-group">
                 <label for="messageSubject">Message Subject: </label>
-                <input type="text" required id="messageSubject" name="messageSubject" class="form-control" data-ng-model="message.messageSubject">
+                <input type="text" required id="messageSubject" name="messageSubject" class="form-control" data-ng-model="messageSubject">
             </div>
             <div class="form-group">
                 <label for="messageBody">Message Body:</label>
-                <textarea class="form-control" rows="5" id="messageBody" data-ng-model="message.messageBody"></textarea>
+                <textarea required class="form-control" rows="5" id="messageBody" data-ng-model="messageBody"></textarea>
             </div>
             <div class="text-center form-group">
                 <button type="submit" class="btn btn-lg btn-success btn-block">Send Message</button>
