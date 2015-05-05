@@ -52,3 +52,11 @@ $ grunt
 Your application should run on the 3000 port so in your browser just go to [http://localhost:3000](http://localhost:3000)
                             
 That's it! your application should be running by now.
+
+## Contributors
+Adam Wall
+Ian Lovrich
+Sung Gun Paek
+Matthew Ly
+Travis Struckhoff
+Dhruv Seth
