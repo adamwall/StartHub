@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://meanuser:meanpass@ds047591.mongolab.com:47591/starthub',
+  db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/' + process.env.DB_NAME,
 	app: {
 		title: 'StartHub - Development Environment'
 	},
